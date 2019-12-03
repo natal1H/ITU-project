@@ -149,7 +149,7 @@ h3 {
 }
 
 /* Single task block */
-.task, .task-add-new {
+.task, .task-add-new, .task-add-form {
   background-color: #e6e6e6;
   padding: 5px;
   margin-bottom: 10px;
@@ -163,6 +163,10 @@ h3 {
 .task-add-new:hover {
   background-color: #a6a6a6;
   color: white;
+}
+
+.task-add-form input[type=number] {
+  width: calc(100% - 15px);
 }
 
 .task-header {

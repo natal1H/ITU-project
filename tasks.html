@@ -36,7 +36,7 @@
               <p class="elapsed-time">Time elapsed: 0:00:00</p>
               <p class="check-due">
                 </span><span class="due-date">Due: 4.12.2019</span>
-                <span class="fa fa-check" style="display:none;float:right"></span>
+                <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
               </p>
             </div>
 
@@ -61,7 +61,7 @@
               <p class="elapsed-time">Time elapsed: 0:00:00</p>
               <p class="check-due">
                 </span><span class="due-date">Due: 4.12.2019</span>
-                <span class="fa fa-check" style="display:none;float:right"></span>             
+                <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>             
               </p>
             </div>
 
@@ -75,12 +75,24 @@
               <p class="elapsed-time">Time elapsed: 0:00:00</p>
               <p class="check-due">
                 </span><span class="due-date">Due: 4.12.2019</span>
-                <span class="fa fa-check" style="display:none;float:right"></span>              
+                <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>              
               </p>
             </div>
 
             <div class="task-add-new">
               <p><span class="fas fa-plus"></span> Add new task</p>
+            </div>
+
+            <div class="task-add-form">
+                <form>
+                  <input type="text" name="task-name" placeholder="Task name..."><br>
+                  
+                  <hr>
+                  Optional<br><!-- TODO make expandable-->
+                  Due: <input type="date" name="task-due"><br>
+                  Estimated time: <input type="number" name="task-estimated-time" min="1" max="5"><br>
+                  <button onclick="taskAddNewSubmit()">Add</button>
+                </form> 
             </div>
           </div>
         </div>
@@ -93,7 +105,7 @@
         <!-- ADD NEW GROUP FORM -->
         <div id="group-add-form" style="display:none">
           <form>
-            <input type="text" name="group-add-new-name" placeholder="Group name..."><br>
+            <input type="text" name="group-name" placeholder="Group name..."><br>
             <button onclick="groupAddNewSubmit()">Add</button> 
           </form>
         </div>

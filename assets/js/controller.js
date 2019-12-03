@@ -60,6 +60,10 @@ function pauseIconClicked() {
     replace(pauseIcon, playIcon);
 }
 
+function checkIconClicked() {
+    console.log("Check icon clicked.");
+}
+
 // Helpful functions
 function replace(hide, show) {
     hide.style.display="none";
