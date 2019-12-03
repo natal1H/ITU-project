@@ -1,0 +1,177 @@
+/* Some defaults */
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #f1f1f1;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+
+/* Style the header with a grey background and some padding */
+.header {
+  overflow: hidden;
+  background-color: #d9d9d9;
+  padding: 20px 10px;
+  margin: 0x
+}
+
+  /* Style the header links */
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+/* Style the header text */
+.header h1 {
+  margin: 0px;
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+  font-size: 25px;
+  font-weight: bold;
+}
+  
+/* Change the background color on mouse-over */
+.header a:hover {
+  background-color: #a6a6a6;
+  color: black;
+}
+
+/* Style the active/current link*/
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+/* Float the link section to the right */
+.header-right {
+  float: right;
+}
+
+.content-wrapper {
+  margin: 15px;
+  /*background-color: red;*/
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+}
+
+/* Task group block */
+.group, #group-add-new {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  max-width: 300px;
+  background-color: #ffffff;
+  margin-right: 15px;
+  padding: 10px 5px 5px 5px;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+
+#group-add-new {
+  padding-bottom: 10px;
+}
+
+#group-add-new:hover {
+  background-color: #a6a6a6;
+  color: white;
+}
+
+#group-add-new h2 {
+  position: relative;
+  padding-left: 30px;
+}
+
+#group-add-new h2:after {
+  content: '\f067';
+  font-family: fontAwesome;
+  position: absolute;
+  left: 2px; /* Adjust as needed */
+  top: 3px; /* Adjust as needed */
+}
+
+/* Single task block */
+.task, .task-add-new {
+  background-color: #e6e6e6;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 8px;;
+}
+
+.task-add-new p {
+  font-weight: bold;
+}
+
+.task-add-new:hover {
+  background-color: #a6a6a6;
+  color: white;
+}
+
+.task-header {
+  margin: 5px 0px 5px 0px;
+}
+
+.task-header>h3 {
+  display:inline;
+}
+
+.task .task-header>i {
+  float:right;
+}
+
+.elapsed-time {
+  margin-bottom: 10px;
+}
+
+.due-date {
+  float: right;
+  font-weight: bold;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #d9d9d9;
+  color: black;
+  text-align: center;
+}
+
+.footer a {
+  color: black;
+  text-decoration: none;
+}
