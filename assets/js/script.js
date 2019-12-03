@@ -1,22 +1,25 @@
 function groupAddNewClick() {
-    console.log("groupAddNewClick() by " + event.target.nodeName);
+    console.log("groupAddNewClick() by " + event.target);
    
     // Get div element
-    var groupAddElement = event.target;
-    if (groupAddElement.nodeName != "DIV") {
+    var hideElement = event.target;
+    if (hideElement.nodeName != "DIV") {
         // Clicked on heading, get parent div
-        groupAddElement = groupAddElement.parentElement;
+        hideElement = hideElement.parentElement;
     }
 
-    // Change the html inside div
-    groupAddElement.innerHTML = `
-    <form>
-    <input type="text" name="group-add-new-name" placeholder="Group name..."><br>
-    <button onclick="groupAddNewSubmit()">Add</button> 
-    </form>
-    `;
+    // Hide clicked div element, show div with forms
+    var showElement = document.getElementById("group-add-form");
+    console.log(hideElement);
+    console.log(showElement)
+    replace(hideElement, showElement)
 }
 
 function groupAddNewSubmit() {
     console.log("groupAddNewSubmit() by " + event.target.nodeName);
+}
+
+function replace(hide, show) {
+    hide.style.display="none";
+    show.style.display="block";
 }

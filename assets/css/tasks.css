@@ -88,7 +88,7 @@ h3 {
 }
 
 /* Task group block */
-.group, #group-add-new {
+.group, #group-add-new, #group-add-form {
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
@@ -101,7 +101,7 @@ h3 {
   align-self: flex-start;
 }
 
-#group-add-new {
+#group-add-new, #group-add-form {
   padding-bottom: 10px;
 }
 
@@ -121,6 +121,31 @@ h3 {
   position: absolute;
   left: 2px; /* Adjust as needed */
   top: 3px; /* Adjust as needed */
+}
+
+#group-add-form input[type=text] {
+  width: calc(100% - 15px);
+  height:28px;
+  margin-bottom: 5px;
+  border: 3px solid lightgray;
+  border-radius: 7px;
+  padding-left:3px;
+}
+
+#group-add-form input[type=text]:focus {
+  border: 3px solid gray;
+}
+
+#group-add-form button {
+  background-color: #555555;
+  border: none;
+  color: white;
+  padding: 8px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 8px;
 }
 
 /* Single task block */

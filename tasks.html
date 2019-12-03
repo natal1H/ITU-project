@@ -14,8 +14,8 @@
       <h1 class="logo">Time tracker</h1>
         <div class="header-right">
           <a class="active" href="#Tasks">Tasks</a>
-          <a href="#profile">Profile</a>
-          <a href="#logout">Logout</a>
+          <a href="profile.html">Profile</a>
+          <a href="index.html">Logout</a>
         </div>
     </div>
 
@@ -79,6 +79,14 @@
         <!-- ADD NEW GROUP -->
         <div id="group-add-new" onclick="groupAddNewClick()">
           <h2>Add new group</h2>
+        </div>
+
+        <!-- ADD NEW GROUP FORM -->
+        <div id="group-add-form" style="display:none">
+          <form>
+            <input type="text" name="group-add-new-name" placeholder="Group name..."><br>
+            <button onclick="groupAddNewSubmit()">Add</button> 
+          </form>
         </div>
       </div>
     </div>
