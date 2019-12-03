@@ -6,7 +6,7 @@
     <title>Time Tracker</title>
     <link rel="stylesheet" href="assets/css/tasks.css">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script><!-- Icons -->
-    <script src="assets/js/script.js"></script> 
+    <script src="assets/js/controller.js"></script> 
   </head>
   <body>
     <!-- HEADER -->
@@ -26,12 +26,16 @@
           <h2>Uncategorized</h2>
 
           <div class="all-tasks">
-            <div class="task">
-              <h3>Take out trash</h3>
+            <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
+              <div class="task-header">
+                <h3>Take out trash</h3>
+                <i class="fa fa-play"></i>
+              </div>
 
               <p class="elapsed-time">Time elapsed: 0:00:00</p>
-              <p>
-                <span class="fa fa-check"></span><span class="due-date">Due: 4.12.2019</span>
+              <p class="check-due">
+                </span><span class="due-date">Due: 4.12.2019</span>
+                <span class="fa fa-check" style="display:none;float:right"></span>
               </p>
             </div>
 
@@ -46,27 +50,29 @@
           <h2>School</h2>
 
           <div class="all-tasks">
-            <div class="task">
+            <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
               <div class="task-header">
                 <h3>Design website</h3>
                 <i class="fa fa-play"></i>
               </div>
               
               <p class="elapsed-time">Time elapsed: 0:00:00</p>
-              <p>
-                <span class="fa fa-check"></span><span class="due-date">Due: 4.12.2019</span>
+              <p class="check-due">
+                </span><span class="due-date">Due: 4.12.2019</span>
+                <span class="fa fa-check" style="display:none;float:right"></span>             
               </p>
             </div>
 
-            <div class="task">
+            <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
                 <div class="task-header">
                   <h3>Program backend</h3>
                   <i class="fa fa-play"></i>
                 </div>
         
               <p class="elapsed-time">Time elapsed: 0:00:00</p>
-              <p>
-                <span class="fa fa-check"></span><span class="due-date">Due: 4.12.2019</span>
+              <p class="check-due">
+                </span><span class="due-date">Due: 4.12.2019</span>
+                <span class="fa fa-check" style="display:none;float:right"></span>              
               </p>
             </div>
 

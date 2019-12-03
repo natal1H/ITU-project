@@ -182,7 +182,7 @@ h3 {
 }
 
 .due-date {
-  float: right;
+  display: inline-block;
   font-weight: bold;
 }
 
