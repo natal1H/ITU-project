@@ -46,8 +46,21 @@ function taskMouseLeave() {
     changeVisibility(checkIcon, "none");
 }
 
-// Helpful functions
+function playIconClicked() {
+    console.log("Play icon clicked -> change to pause");
+    var playIcon = event.target;
+    var pauseIcon = playIcon.parentElement.getElementsByClassName('fa fa-pause')[0];
+    replace(playIcon, pauseIcon);
+}
 
+function pauseIconClicked() {
+    console.log("Pause icon clicked -> change to play");
+    var pauseIcon = event.target;
+    var playIcon = pauseIcon.parentElement.getElementsByClassName('fa fa-play')[0];
+    replace(pauseIcon, playIcon);
+}
+
+// Helpful functions
 function replace(hide, show) {
     hide.style.display="none";
     show.style.display="block";
