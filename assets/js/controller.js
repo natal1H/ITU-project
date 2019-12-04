@@ -102,7 +102,44 @@ function taskAddNewClick() {
 }
 
 function taskAddNewSubmit() {
-    // TODO
+    var taskName = document.forms["task-form"]["task-name"].value;
+    var taskDue = document.forms["task-form"]["task-due"].value;
+    var taskEstimatedTime = document.forms["task-form"]["task-estimated-time"].value;
+    var taskTarification = document.forms["task-form"]["task-tarification"].value;
+    var taskPriority = document.forms["task-form"]["task-priority"].value;
+    var taskDescription = event.target.getElementsByClassName("task-optional")[0].getElementsByClassName("task-description")[0].value;
+    var tasks = JSON.parse(localStorage.getItem('storeTasks'));
+    // Get task category
+    var groupEl = findAncestorWithClass(event.target, "group");
+    var taskCategory = getCategoryId(groupEl);
+    var newTask = {
+        id: tasks.length,
+        name: taskName,
+        category: taskCategory,
+        description: taskDescription,
+        timeElapsed: 0,
+        timeEstimated: taskEstimatedTime, // h
+        due: "",
+        priority: taskPriority, // None
+        tarification: taskTarification,
+        status: "paused",
+    };
+    tasks.push(newTask);
+    localStorage.setItem('storeTasks', JSON.stringify(tasks));
+    // Redraw groups and tasks
+    displayCategories();
+    displayTasks();
+}
+
+function getCategoryId(groupEl) {
+    var heading = groupEl.getElementsByTagName("h2")[0].innerHTML;
+    var categories = JSON.parse(localStorage.getItem('storeCategories'));
+    for (var i = 0; i < categories.length; i++) {
+        if (categories[i].name == heading) {
+            return categories[i].id;
+        }
+    }
+    return -1;
 }
 
 // Displaying model
@@ -143,7 +180,7 @@ function displayTasks() {
     for (var i = 0; i < tasks.length; i++) {
         // display task
         var task = tasks[i];
-        var allTasksDiv = categoryElements[task.id].getElementsByClassName("all-tasks")[0];
+        var allTasksDiv = categoryElements[task.category].getElementsByClassName("all-tasks")[0];
         allTasksDiv.innerHTML += `
         <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
           <div class="task-header">
@@ -169,28 +206,28 @@ function displayTasks() {
         </div>
   
         <div class="task-add-form" style="display:none">
-          <form>
+          <form name="task-form" onsubmit="taskAddNewSubmit()">
             <input type="text" name="task-name" placeholder="Task name..." required><br>
                   
             <div class="task-expand" onclick="taskAddExpand()">Advanced <i class="fa fa-angle-down"></i></div>
                     
-              <div class="task-optional" style="display:none;">
-                <hr style="margin: 5px 0 10px 0">
-                Due: <input type="date" name="task-due"><br>
-                Estimated time: <input type="number" class="estimated-time" name="task-estimated-time" min="1" max="5"><br>
-                Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
-                Priority:
-                <ul class="radion-buttons">
-                  <li><input type="radio" name="task-priority" value="low"> Low</li>
-                  <li><input type="radio" name="task-priority" value="medium"> Medium</li>
-                  <li><input type="radio" name="task-priority" value="high"> High</li>
-                </ul>
-                <br><br><br>
+            <div class="task-optional" style="display:none;">
+              <hr style="margin: 5px 0 10px 0">
+              Due: <input type="date" name="task-due"><br>
+              Estimated time: <input type="number" class="estimated-time" name="task-estimated-time" min="1" max="5"><br>
+              Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
+              Priority:
+              <ul class="radion-buttons">
+                <li><input type="radio" name="task-priority" value="low"> Low</li>
+                <li><input type="radio" name="task-priority" value="medium"> Medium</li>
+                <li><input type="radio" name="task-priority" value="high"> High</li>
+              </ul>
+              <br><br><br>
   
-                <textarea placeholder="Task description..."></textarea><br>
-              </div>
+              <textarea class="task-description" placeholder="Task description..."></textarea><br>
+            </div>
   
-            <button onclick="taskAddNewSubmit()">Add</button>
+            <input type="submit" value="Add">
           </form> 
         </div>
         `;

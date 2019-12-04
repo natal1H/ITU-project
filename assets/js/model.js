@@ -11,7 +11,7 @@ var tasks = [
         timeElapsed: 0,
         timeEstimated: 1, // h
         due: new Date(Date.UTC(2019, 12, 24)),
-        priority: 0, // None
+        priority: "no-priority",
         tarification: 0.0,
         status: "paused",
     },
@@ -23,7 +23,7 @@ var tasks = [
         timeElapsed: 0,
         timeEstimated: 3, // h
         due: new Date(Date.UTC(2019, 12, 8)),
-        priority: 2, // None
+        priority: "no-priority",
         tarification: 0.0,
         status: "paused",
     },
