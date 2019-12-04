@@ -82,6 +82,30 @@ function taskAddExpand() {
     }
 }
 
+function taskAddNewClick() {
+    var srcElement = event.target;
+    if (srcElement.className != "task-add-new")
+        srcElement = findAncestorWithClass(srcElement, "task-add-new");
+
+    // Close all open add task forms
+    var addTaskForms = document.getElementsByClassName("task-add-form");
+    for (var i = 0; i < addTaskForms.length; i++) {
+        if (addTaskForms[i].style.display == "block") {
+            // Close this one
+            var buttonAdd = addTaskForms[i].parentElement.getElementsByClassName("task-add-new")[0];
+            replace(addTaskForms[i], buttonAdd);
+        }
+    }
+
+    var formElement = srcElement.parentElement.getElementsByClassName("task-add-form")[0];
+    // Hide button to add, display form
+    replace(srcElement, formElement);
+}
+
+function taskAddNewSubmit() {
+    // TODO
+}
+
 // Helpful functions
 function replace(hide, show) {
     hide.style.display="none";

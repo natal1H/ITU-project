@@ -40,8 +40,34 @@
               </p>
             </div>
 
-            <div class="task-add-new">
-              <p><span class="fas fa-plus"></span> Add new task</p>
+            <div class="task-add-new" onclick="taskAddNewClick()">
+                <p><span class="fas fa-plus"></span> Add new task</p>
+            </div>
+  
+            <div class="task-add-form" style="display:none">
+              <form>
+                <input type="text" name="task-name" placeholder="Task name..."><br>
+                    
+                <div class="task-expand" onclick="taskAddExpand()">Advanced <i class="fa fa-angle-down"></i></div>
+                    
+                  <div class="task-optional" style="display:none;">
+                    <hr style="margin: 5px 0 10px 0">
+                    Due: <input type="date" name="task-due"><br>
+                    Estimated time: <input type="number" class="estimated-time" name="task-estimated-time" min="1" max="5"><br>
+                    Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
+                    Priority:
+                    <ul class="radion-buttons">
+                      <li><input type="radio" name="task-priority" value="low"> Low</li>
+                      <li><input type="radio" name="task-priority" value="medium"> Medium</li>
+                      <li><input type="radio" name="task-priority" value="high"> High</li>
+                    </ul>
+                    <br><br><br>
+  
+                    <textarea placeholder="Task description..."></textarea><br>
+                  </div>
+  
+                  <button onclick="taskAddNewSubmit()">Add</button>
+                </form> 
             </div>
           </div>
         </div>
@@ -79,11 +105,11 @@
               </p>
             </div>
 
-            <div class="task-add-new">
+            <div class="task-add-new" onclick="taskAddNewClick()">
               <p><span class="fas fa-plus"></span> Add new task</p>
             </div>
 
-            <div class="task-add-form">
+            <div class="task-add-form" style="display:none">
                 <form>
                   <input type="text" name="task-name" placeholder="Task name..."><br>
                   
