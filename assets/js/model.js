@@ -1,22 +1,24 @@
-var categories = [{id: 1, name: "Uncategorized"}, {id: 2, name: "School"}];
+var categories = [{id: 0, name: "Uncategorized"}, {id: 1, name: "School"}];
 
 var tasks = [
     {
-        id: 1,
+        id: 0,
         name: "Buy train ticket",
-        category: 1,
+        category: 0,
         description: "Buy train ticket to go home",
         timeElapsed: 0,
+        timeEstimated: 1, // h
         due: new Date(2019, 12, 24),
         priority: 0, // None
         tarification: 0.0
     },
     {
-        id: 2,
+        id: 1,
         name: "Design website",
-        category: 2,
+        category: 1,
         description: "Design website for ITU project",
         timeElapsed: 0,
+        timeEstimated: 3, // h
         due: new Date(2019, 12, 8),
         priority: 2, // None
         tarification: 0.0

@@ -109,8 +109,7 @@ function displayCategories() {
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
     var htmlOutput = "";
     for (var i = 0; i < categories.length; i++) {
-        htmlOutput +=
-        `
+        htmlOutput += `
         <div class="group">
           <h2>${categories[i].name}</h2>
 
@@ -118,8 +117,7 @@ function displayCategories() {
         </div>
         `;
     }
-    htmlOutput += 
-    `
+    htmlOutput += `
     <div id="group-add-new" onclick="groupAddNewClick()">
       <h2>Add new group</h2>
     </div>
@@ -136,6 +134,67 @@ function displayCategories() {
 
 function displayTasks() {
     var categoryElements = document.getElementsByClassName("group");
+    // Clear all tasks already displayed first
+    for (var i = 0; i < categoryElements.length; i++)
+        categoryElements[i].getElementsByClassName("all-tasks")[0].innerHTML = "";
+
+    var tasks = JSON.parse(localStorage.getItem('storeTasks'));
+    for (var i = 0; i < tasks.length; i++) {
+        // display task
+        var task = tasks[i];
+        var allTasksDiv = categoryElements[task.id].getElementsByClassName("all-tasks")[0];
+        allTasksDiv.innerHTML += `
+        <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
+          <div class="task-header">
+            <h3>${task.name}</h3>
+            <i class="fa fa-play" onclick="playIconClicked()"></i>
+            <i class="fa fa-pause" style="display:none" onclick="pauseIconClicked()"></i>
+          </div>
+
+          <p class="elapsed-time">Time elapsed: ${task.timeElapsed}</p>
+          <p class="check-due">
+          </span><span class="due-date">Due: ${task.due}</span>
+          <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
+          </p>
+        </div>
+        `;
+    }
+
+    // Add to each column add new task button
+    for (var i = 0; i < categoryElements.length; i++) {
+        categoryElements[i].getElementsByClassName("all-tasks")[0].innerHTML += `
+        <div class="task-add-new" onclick="taskAddNewClick()">
+          <p><span class="fas fa-plus"></span> Add new task</p>
+        </div>
+  
+        <div class="task-add-form" style="display:none">
+          <form>
+            <input type="text" name="task-name" placeholder="Task name..."><br>
+                  
+            <div class="task-expand" onclick="taskAddExpand()">Advanced <i class="fa fa-angle-down"></i></div>
+                    
+              <div class="task-optional" style="display:none;">
+                <hr style="margin: 5px 0 10px 0">
+                Due: <input type="date" name="task-due"><br>
+                Estimated time: <input type="number" class="estimated-time" name="task-estimated-time" min="1" max="5"><br>
+                Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
+                Priority:
+                <ul class="radion-buttons">
+                  <li><input type="radio" name="task-priority" value="low"> Low</li>
+                  <li><input type="radio" name="task-priority" value="medium"> Medium</li>
+                  <li><input type="radio" name="task-priority" value="high"> High</li>
+                </ul>
+                <br><br><br>
+  
+                <textarea placeholder="Task description..."></textarea><br>
+              </div>
+  
+            <button onclick="taskAddNewSubmit()">Add</button>
+          </form> 
+        </div>
+        `;
+    }
+
 }
 
 // Helpful functions
