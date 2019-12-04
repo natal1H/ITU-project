@@ -61,6 +61,32 @@ function pauseIconClicked() {
 
 function checkIconClicked() {
     console.log("Check icon clicked.");
+    var taskEl = findAncestorWithClass(event.target, "task");
+    var groupEl = findAncestorWithClass(taskEl, "group");
+    var category = getCategoryId(groupEl, category);
+    var task = getTask(taskEl, category);
+
+    // Remove task from tasks
+    removeTask(task);
+
+    // Change task attributes
+    task.status = "done";
+    task.category = -1;
+    task.finished = moment().toDate().getTime();
+
+    // Add to done
+    var done = localStorage.getItem("storeDone");
+    if (done.length == 0) {
+        done = [tasks];
+    }
+    else {
+        done.push(task);
+    }
+    localStorage.setItem('storeDone', JSON.stringify(done));
+
+    // Remove html
+    var allTasks = findAncestorWithClass(taskEl, "all-tasks");
+
 }
 
 function taskAddExpand() {
@@ -148,6 +174,24 @@ function getCategoryId(groupEl) {
         }
     }
     return -1;
+}
+
+function getTask(taskEl, taskCategory) {
+    var heading = taskEl.getElementsByTagName("h3")[0].innerHTML;
+    var tasks = JSON.parse(localStorage.getItem('storeTasks'));
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].name == heading && tasks[i].category == taskCategory) {
+            return tasks[i];
+        }
+    }
+    return none;
+}
+
+function removeTask(task) {
+    var tasks = JSON.parse(localStorage.getItem('storeTasks'));
+    remove(tasks, task);
+    console.log(tasks)
+    localStorage.setItem('storeTasks', JSON.stringify(tasks));
 }
 
 function getTaskForm(columnNum) {
@@ -274,4 +318,9 @@ function changeVisibility(element, visibility) {
 function findAncestorWithClass(el, sel) {
     while ((el = el.parentElement) && !(el.className == sel));
     return el;
+}
+
+function remove(array, element) {
+    const index = array.indexOf(element);
+    array.splice(index, 1);
 }

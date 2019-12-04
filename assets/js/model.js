@@ -14,6 +14,7 @@ var tasks = [
         priority: "no-priority",
         tarification: 0.0,
         status: "paused",
+        finished: undefined,
     },
     {
         id: 1,
@@ -26,10 +27,11 @@ var tasks = [
         priority: "no-priority",
         tarification: 0.0,
         status: "paused",
+        finished: undefined,
     },
 ]
 
-var done = [];
+var done = new Array();
 
 if (localStorage.getItem("storeCategories") === null)
     localStorage.setItem('storeCategories', JSON.stringify(categories));
