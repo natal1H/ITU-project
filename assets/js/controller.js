@@ -102,16 +102,24 @@ function taskAddNewClick() {
 }
 
 function taskAddNewSubmit() {
-    var taskName = document.forms["task-form"]["task-name"].value;
-    var taskDue = document.forms["task-form"]["task-due"].value;
-    var taskEstimatedTime = document.forms["task-form"]["task-estimated-time"].value;
-    var taskTarification = document.forms["task-form"]["task-tarification"].value;
-    var taskPriority = document.forms["task-form"]["task-priority"].value;
-    var taskDescription = event.target.getElementsByClassName("task-optional")[0].getElementsByClassName("task-description")[0].value;
-    var tasks = JSON.parse(localStorage.getItem('storeTasks'));
     // Get task category
     var groupEl = findAncestorWithClass(event.target, "group");
     var taskCategory = getCategoryId(groupEl);
+    var taskForm = getTaskForm(taskCategory);
+
+    //var taskName = document.forms["task-form"]["task-name"].value;
+    var taskName = taskForm.getElementsByClassName("task-name")[0].value;   
+    
+    var taskDue = taskForm.getElementsByClassName("task-due")[0].value;
+    var taskEstimatedTime = taskForm.getElementsByClassName("estimated-time").value;
+    var taskTarification = taskForm.getElementsByClassName("tarification").value;
+    var taskDescription = event.target.getElementsByClassName("task-optional")[0].getElementsByClassName("task-description")[0].value;
+    
+    // Priority - TODO
+    //var taskPriority = document.forms["task-form"]["task-priority"].value;
+
+    var tasks = JSON.parse(localStorage.getItem('storeTasks'));
+
     var newTask = {
         id: tasks.length,
         name: taskName,
@@ -120,7 +128,7 @@ function taskAddNewSubmit() {
         timeElapsed: 0,
         timeEstimated: taskEstimatedTime, // h
         due: "",
-        priority: taskPriority, // None
+        priority: "no-priority", // TODO - temp
         tarification: taskTarification,
         status: "paused",
     };
@@ -140,6 +148,12 @@ function getCategoryId(groupEl) {
         }
     }
     return -1;
+}
+
+function getTaskForm(columnNum) {
+    var groupEl = document.getElementsByClassName("group")[columnNum];
+    var taskFormEl = groupEl.getElementsByClassName("task-add-form")[0].getElementsByTagName("form")[0];
+    return taskFormEl;
 }
 
 // Displaying model
@@ -181,6 +195,12 @@ function displayTasks() {
         // display task
         var task = tasks[i];
         var allTasksDiv = categoryElements[task.category].getElementsByClassName("all-tasks")[0];
+        var dueDate;
+        if (task.due == "")
+            dueDate = "";
+        else
+            dueDate = moment(task.due).format("D.M.YYYY");
+
         allTasksDiv.innerHTML += `
         <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
           <div class="task-header">
@@ -191,7 +211,7 @@ function displayTasks() {
 
           <p class="elapsed-time">Time elapsed: ${task.timeElapsed}</p>
           <p class="check-due">
-          </span><span class="due-date">Due: ${moment(task.due).format("D.M.YYYY")}</span>
+          </span><span class="due-date">Due: ${dueDate}</span>
           <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
           </p>
         </div>
@@ -207,20 +227,20 @@ function displayTasks() {
   
         <div class="task-add-form" style="display:none">
           <form name="task-form" onsubmit="taskAddNewSubmit()">
-            <input type="text" name="task-name" placeholder="Task name..." required><br>
+            <input type="text" class="task-name" name="task-name" placeholder="Task name..." required><br>
                   
             <div class="task-expand" onclick="taskAddExpand()">Advanced <i class="fa fa-angle-down"></i></div>
                     
             <div class="task-optional" style="display:none;">
               <hr style="margin: 5px 0 10px 0">
-              Due: <input type="date" name="task-due"><br>
+              Due: <input type="date" class="task-due" name="task-due"><br>
               Estimated time: <input type="number" class="estimated-time" name="task-estimated-time" min="1" max="5"><br>
               Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
               Priority:
               <ul class="radion-buttons">
-                <li><input type="radio" name="task-priority" value="low"> Low</li>
-                <li><input type="radio" name="task-priority" value="medium"> Medium</li>
-                <li><input type="radio" name="task-priority" value="high"> High</li>
+                <li><input type="radio" class="task-low" name="task-priority" value="low"> Low</li>
+                <li><input type="radio" class="task-medium" name="task-priority" value="medium"> Medium</li>
+                <li><input type="radio" class="task-high" name="task-priority" value="high"> High</li>
               </ul>
               <br><br><br>
   
