@@ -1,6 +1,7 @@
-/* Some defaults */
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Roboto", sans-serif;
   margin: 0px;
   padding: 0px;
 }

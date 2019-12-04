@@ -3,11 +3,23 @@
   <head>
     <meta charset="utf-8">
     <title>Time Tracker</title>
-    <link rel="stylesheet" href="assets/index.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script src="assets/js/controller.js"></script> 
   </head>
   <body>
-    <h1>Timer tracker - login page</h1>
+    <h1>Time tracker</h1>
 
-    <a href="tasks.html">Tasks</a>
+    <p>Get better at managing your time using the Time tracker - create todo tasks, put them into groups and track time</p>
+
+    <div class="login-page">
+        <div class="form">
+          <form class="login-form" onsubmit="return redirect()">
+            <input type="text" placeholder="username" required>
+            <input type="password" placeholder="password" required>
+            <input type="submit" value="Login">
+            <p class="message">Not registered? <a href="#">Create an account</a></p>
+          </form>
+        </div>
+      </div>
   </body>
 </html>

@@ -255,6 +255,12 @@ function displayTasks() {
 
 }
 
+// Login page functions
+function redirect() {
+    window.location.replace("tasks.html");
+    return false;
+  }
+
 // Helpful functions
 function replace(hide, show) {
     hide.style.display="none";
