@@ -64,6 +64,24 @@ function checkIconClicked() {
     console.log("Check icon clicked.");
 }
 
+function taskAddExpand() {
+    var srcElement = event.target;
+    if (srcElement.className != "task-expand") 
+        srcElement = srcElement.parentElement;
+    var formElement = srcElement.parentElement.getElementsByClassName("task-optional")[0];
+
+    if (srcElement.innerHTML == 'Advanced <i class="fa fa-angle-down" aria-hidden="true"></i>') {
+        // Expand
+        srcElement.innerHTML = 'Advanced <i class="fa fa-angle-up"></i>';
+        changeVisibility(formElement, "block");
+    }
+    else {
+        // Close
+        srcElement.innerHTML = 'Advanced <i class="fa fa-angle-down"></i>';
+        changeVisibility(formElement, "none");
+    }
+}
+
 // Helpful functions
 function replace(hide, show) {
     hide.style.display="none";

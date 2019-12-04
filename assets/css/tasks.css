@@ -124,7 +124,7 @@ h3 {
 }
 
 #group-add-form input[type=text] {
-  width: calc(100% - 15px);
+  width: calc(100% - 10px);
   height:28px;
   margin-bottom: 5px;
   border: 3px solid lightgray;
@@ -136,7 +136,7 @@ h3 {
   border: 3px solid gray;
 }
 
-#group-add-form button {
+#group-add-form button, .task-add-form button {
   background-color: #555555;
   border: none;
   color: white;
@@ -165,8 +165,74 @@ h3 {
   color: white;
 }
 
+.task-add-form input[type=text] {
+  width: calc(100% - 10px);
+  height:28px;
+  margin-bottom: 5px;
+  border: 3px solid lightgray;
+  border-radius: 7px;
+  padding-left:3px;
+}
+
+.task-add-form input[type=text]:focus {
+  border: 3px solid gray;
+}
+
+.task-add-form .estimated-time {
+  width: calc(100% - 130px);
+}
+
+.task-add-form .tarification {
+  width: calc(100% - 130px);
+  margin-left: 30px;
+}
+
 .task-add-form input[type=number] {
-  width: calc(100% - 15px);
+  height:25px;
+  margin-bottom: 5px;
+  border: 3px solid lightgray;
+  border-radius: 7px;
+  padding-left:3px;
+}
+
+.task-add-form input[type=number]:focus {
+  border: 3px solid gray;
+}
+
+.task-add-form input[type=date] {
+  width: calc(100% - 125px);
+  height:25px;
+  margin-bottom: 5px;
+  border: 3px solid lightgray;
+  border-radius: 7px;
+  margin-left: 75px;
+}
+
+.task-add-form input[type=date]:focus {
+  border: 3px solid gray;
+}
+
+.task-add-form .radion-buttons {
+  float:right;
+  list-style-type: none;
+  margin-right: 15px;
+}
+
+.task-add-form textarea {
+  width: calc(100% - 20px);
+  margin: 5px 0 10px 0;
+  resize: none;
+  padding: 5px;
+  border: 3px solid lightgray;
+  border-radius: 7px;
+}
+
+.task-add-form textarea:focus {
+  border: 3px solid gray;
+}
+
+.task-expand {
+  margin: 0 0 5px 3px;
 }
 
 .task-header {
