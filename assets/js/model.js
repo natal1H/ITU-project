@@ -1,3 +1,5 @@
+var user = {login: "xlogin00", password: "12345"};
+
 var categories = [{id: 0, name: "Uncategorized"}, {id: 1, name: "School"}];
 
 var tasks = [
@@ -8,9 +10,10 @@ var tasks = [
         description: "Buy train ticket to go home",
         timeElapsed: 0,
         timeEstimated: 1, // h
-        due: new Date(2019, 12, 24),
+        due: new Date(Date.UTC(2019, 12, 24)),
         priority: 0, // None
-        tarification: 0.0
+        tarification: 0.0,
+        status: "paused",
     },
     {
         id: 1,
@@ -19,11 +22,20 @@ var tasks = [
         description: "Design website for ITU project",
         timeElapsed: 0,
         timeEstimated: 3, // h
-        due: new Date(2019, 12, 8),
+        due: new Date(Date.UTC(2019, 12, 8)),
         priority: 2, // None
-        tarification: 0.0
+        tarification: 0.0,
+        status: "paused",
     },
 ]
 
-localStorage.setItem('storeCategories', JSON.stringify(categories));
-localStorage.setItem('storeTasks', JSON.stringify(tasks));
+var done = [];
+
+if (localStorage.getItem("storeCategories") === null)
+    localStorage.setItem('storeCategories', JSON.stringify(categories));
+if (localStorage.getItem("storeTasks") === null)
+    localStorage.setItem('storeTasks', JSON.stringify(tasks));
+if (localStorage.getItem("storeDone") === null)
+    localStorage.setItem('storeDone', JSON.stringify(done));
+if (localStorage.getItem("storeUser") === null)
+    localStorage.setItem('storeUser', JSON.stringify(user));

@@ -1,6 +1,4 @@
-function groupAddNewClick() {
-    console.log("groupAddNewClick() by " + event.target);
-   
+function groupAddNewClick() {   
     // Get div element
     var hideElement = event.target;
     if (hideElement.nodeName != "DIV")
@@ -9,13 +7,18 @@ function groupAddNewClick() {
 
     // Hide clicked div element, show div with forms
     var showElement = document.getElementById("group-add-form");
-    console.log(hideElement);
-    console.log(showElement)
     replace(hideElement, showElement)
 }
 
 function groupAddNewSubmit() {
-    console.log("groupAddNewSubmit() by " + event.target.nodeName);
+    var categoryName = document.forms["group-form"]["group-name"].value;
+    var categories = JSON.parse(localStorage.getItem('storeCategories'));
+    var newCategory = {id: categories.length, name: categoryName};
+    categories.push(newCategory);
+    localStorage.setItem('storeCategories', JSON.stringify(categories));
+    // Redraw groups and tasks
+    displayCategories();
+    displayTasks();
 }
 
 function taskMouseEnter() {
@@ -45,14 +48,12 @@ function taskMouseLeave() {
 }
 
 function playIconClicked() {
-    console.log("Play icon clicked -> change to pause");
     var playIcon = event.target;
     var pauseIcon = playIcon.parentElement.getElementsByClassName('fa fa-pause')[0];
     replace(playIcon, pauseIcon);
 }
 
 function pauseIconClicked() {
-    console.log("Pause icon clicked -> change to play");
     var pauseIcon = event.target;
     var playIcon = pauseIcon.parentElement.getElementsByClassName('fa fa-play')[0];
     replace(pauseIcon, playIcon);
@@ -123,9 +124,9 @@ function displayCategories() {
     </div>
 
     <div id="group-add-form" style="display:none">
-      <form>
-        <input type="text" name="group-name" placeholder="Group name..."><br>
-        <button onclick="groupAddNewSubmit()">Add</button> 
+      <form name="group-form" onsubmit="groupAddNewSubmit()">
+        <input type="text" name="group-name" placeholder="Group name..." required><br>
+        <input type="submit" value="Add">      
       </form>
     </div>
     `;
@@ -153,7 +154,7 @@ function displayTasks() {
 
           <p class="elapsed-time">Time elapsed: ${task.timeElapsed}</p>
           <p class="check-due">
-          </span><span class="due-date">Due: ${task.due}</span>
+          </span><span class="due-date">Due: ${moment(task.due).format("D.M.YYYY")}</span>
           <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
           </p>
         </div>
@@ -169,7 +170,7 @@ function displayTasks() {
   
         <div class="task-add-form" style="display:none">
           <form>
-            <input type="text" name="task-name" placeholder="Task name..."><br>
+            <input type="text" name="task-name" placeholder="Task name..." required><br>
                   
             <div class="task-expand" onclick="taskAddExpand()">Advanced <i class="fa fa-angle-down"></i></div>
                     

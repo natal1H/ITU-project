@@ -136,7 +136,7 @@ h3 {
   border: 3px solid gray;
 }
 
-#group-add-form button, .task-add-form button {
+#group-add-form input[type=submit], .task-add-form button {
   background-color: #555555;
   border: none;
   color: white;
