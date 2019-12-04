@@ -18,8 +18,6 @@ function groupAddNewSubmit() {
     console.log("groupAddNewSubmit() by " + event.target.nodeName);
 }
 
-
-
 function taskMouseEnter() {
     // Get the div element if hovering over something else
     var taskElement = event.target;
@@ -104,6 +102,40 @@ function taskAddNewClick() {
 
 function taskAddNewSubmit() {
     // TODO
+}
+
+// Displaying model
+function displayCategories() {
+    var categories = JSON.parse(localStorage.getItem('storeCategories'));
+    var htmlOutput = "";
+    for (var i = 0; i < categories.length; i++) {
+        htmlOutput +=
+        `
+        <div class="group">
+          <h2>${categories[i].name}</h2>
+
+          <div class="all-tasks"></div>
+        </div>
+        `;
+    }
+    htmlOutput += 
+    `
+    <div id="group-add-new" onclick="groupAddNewClick()">
+      <h2>Add new group</h2>
+    </div>
+
+    <div id="group-add-form" style="display:none">
+      <form>
+        <input type="text" name="group-name" placeholder="Group name..."><br>
+        <button onclick="groupAddNewSubmit()">Add</button> 
+      </form>
+    </div>
+    `;
+    document.getElementsByClassName("row")[0].innerHTML= htmlOutput;
+}
+
+function displayTasks() {
+    var categoryElements = document.getElementsByClassName("group");
 }
 
 // Helpful functions
