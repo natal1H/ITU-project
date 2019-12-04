@@ -6,7 +6,7 @@
     <title>Time Tracker</title>
     <link rel="stylesheet" href="assets/css/tasks.css">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script><!-- Icons -->
-    <script src="assets/js/script.js"></script> 
+    <script src="assets/js/controller.js"></script> 
   </head>
   <body>
     <!-- HEADER -->
@@ -14,8 +14,8 @@
       <h1 class="logo">Time tracker</h1>
         <div class="header-right">
           <a class="active" href="#Tasks">Tasks</a>
-          <a href="#profile">Profile</a>
-          <a href="#logout">Logout</a>
+          <a href="profile.html">Profile</a>
+          <a href="index.html">Logout</a>
         </div>
     </div>
 
@@ -26,17 +26,48 @@
           <h2>Uncategorized</h2>
 
           <div class="all-tasks">
-            <div class="task">
-              <h3>Take out trash</h3>
+            <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
+              <div class="task-header">
+                <h3>Take out trash</h3>
+                <i class="fa fa-play" onclick="playIconClicked()"></i>
+                <i class="fa fa-pause" style="display:none" onclick="pauseIconClicked()"></i>
+              </div>
 
               <p class="elapsed-time">Time elapsed: 0:00:00</p>
-              <p>
-                <span class="fa fa-check"></span><span class="due-date">Due: 4.12.2019</span>
+              <p class="check-due">
+                </span><span class="due-date">Due: 4.12.2019</span>
+                <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
               </p>
             </div>
 
-            <div class="task-add-new">
-              <p><span class="fas fa-plus"></span> Add new task</p>
+            <div class="task-add-new" onclick="taskAddNewClick()">
+                <p><span class="fas fa-plus"></span> Add new task</p>
+            </div>
+  
+            <div class="task-add-form" style="display:none">
+              <form>
+                <input type="text" name="task-name" placeholder="Task name..."><br>
+                    
+                <div class="task-expand" onclick="taskAddExpand()">Advanced <i class="fa fa-angle-down"></i></div>
+                    
+                  <div class="task-optional" style="display:none;">
+                    <hr style="margin: 5px 0 10px 0">
+                    Due: <input type="date" name="task-due"><br>
+                    Estimated time: <input type="number" class="estimated-time" name="task-estimated-time" min="1" max="5"><br>
+                    Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
+                    Priority:
+                    <ul class="radion-buttons">
+                      <li><input type="radio" name="task-priority" value="low"> Low</li>
+                      <li><input type="radio" name="task-priority" value="medium"> Medium</li>
+                      <li><input type="radio" name="task-priority" value="high"> High</li>
+                    </ul>
+                    <br><br><br>
+  
+                    <textarea placeholder="Task description..."></textarea><br>
+                  </div>
+  
+                  <button onclick="taskAddNewSubmit()">Add</button>
+                </form> 
             </div>
           </div>
         </div>
@@ -46,32 +77,62 @@
           <h2>School</h2>
 
           <div class="all-tasks">
-            <div class="task">
+            <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
               <div class="task-header">
                 <h3>Design website</h3>
-                <i class="fa fa-play"></i>
+                <i class="fa fa-play" onclick="playIconClicked()"></i>
+                <i class="fa fa-pause" style="display:none" onclick="pauseIconClicked()"></i>
               </div>
               
               <p class="elapsed-time">Time elapsed: 0:00:00</p>
-              <p>
-                <span class="fa fa-check"></span><span class="due-date">Due: 4.12.2019</span>
+              <p class="check-due">
+                </span><span class="due-date">Due: 4.12.2019</span>
+                <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>             
               </p>
             </div>
 
-            <div class="task">
+            <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
                 <div class="task-header">
                   <h3>Program backend</h3>
-                  <i class="fa fa-play"></i>
+                  <i class="fa fa-play" onclick="playIconClicked()"></i>
+                  <i class="fa fa-pause" style="display:none" onclick="pauseIconClicked()"></i>
                 </div>
         
               <p class="elapsed-time">Time elapsed: 0:00:00</p>
-              <p>
-                <span class="fa fa-check"></span><span class="due-date">Due: 4.12.2019</span>
+              <p class="check-due">
+                </span><span class="due-date">Due: 4.12.2019</span>
+                <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>              
               </p>
             </div>
 
-            <div class="task-add-new">
+            <div class="task-add-new" onclick="taskAddNewClick()">
               <p><span class="fas fa-plus"></span> Add new task</p>
+            </div>
+
+            <div class="task-add-form" style="display:none">
+                <form>
+                  <input type="text" name="task-name" placeholder="Task name..."><br>
+                  
+                  <div class="task-expand" onclick="taskAddExpand()">Advanced <i class="fa fa-angle-down"></i></div>
+                  
+                  <div class="task-optional" style="display:none;">
+                    <hr style="margin: 5px 0 10px 0">
+                    Due: <input type="date" name="task-due"><br>
+                    Estimated time: <input type="number" class="estimated-time" name="task-estimated-time" min="1" max="5"><br>
+                    Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
+                    Priority:
+                    <ul class="radion-buttons">
+                      <li><input type="radio" name="task-priority" value="low"> Low</li>
+                      <li><input type="radio" name="task-priority" value="medium"> Medium</li>
+                      <li><input type="radio" name="task-priority" value="high"> High</li>
+                    </ul>
+                    <br><br><br>
+
+                    <textarea placeholder="Task description..."></textarea><br>
+                  </div>
+
+                  <button onclick="taskAddNewSubmit()">Add</button>
+                </form> 
             </div>
           </div>
         </div>
@@ -79,6 +140,14 @@
         <!-- ADD NEW GROUP -->
         <div id="group-add-new" onclick="groupAddNewClick()">
           <h2>Add new group</h2>
+        </div>
+
+        <!-- ADD NEW GROUP FORM -->
+        <div id="group-add-form" style="display:none">
+          <form>
+            <input type="text" name="group-name" placeholder="Group name..."><br>
+            <button onclick="groupAddNewSubmit()">Add</button> 
+          </form>
         </div>
       </div>
     </div>
