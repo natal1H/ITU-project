@@ -396,7 +396,7 @@ function displayTasks() {
             <div class="task-optional" style="display:none;">
               <hr style="margin: 5px 0 10px 0">
               Due: <input type="date" class="task-due" name="task-due"><br>
-              Estimated time: <input type="number" class="estimated-time" name="task-estimated-time" min="1" max="5"><br>
+              Estimated time: <input type="number" class="estimated-time" name="task-estimated-time"><br>
               Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
               Priority:
               <ul class="radion-buttons">
@@ -418,20 +418,29 @@ function displayTasks() {
 }
 
 function displayDialog(taskObj, categoryObj) {
-    document.getElementById("myModal").innerHTML = `
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Modal Header</h2>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the Modal Body</p>
-        <p>Some other text...</p>
-      </div>
-      <div class="modal-footer">
-        <h3>Modal Footer</h3>
-      </div>
-    </div>
+    document.getElementById("myModal").getElementsByClassName("modal-body")[0].innerHTML = `
+    <form name="dialog-form">
+      Name:<br>
+      <input type="text" value=""><br>
+      Description:<br>
+      <textarea></textarea><br>
+      Due:<br>
+      <input type="date"><br>
+      Estimated time:<br>
+      <input type="number"><br>
+      Elapsed time: ...<br>
+      Tarification:<br>
+      <input type="number" step="0.01"><br>
+      Priority:<br>
+      <ul class="radion-buttons">
+        <li><input type="radio" value="low"> Low</li>
+        <li><input type="radio" value="medium"> Medium</li>
+        <li><input type="radio" value="high"> High</li>
+      </ul>
+      <button>Reset time</button>
+
+      <input type="submit" value="Save changes">
+    </form>
     `
 
     // Get the modal
