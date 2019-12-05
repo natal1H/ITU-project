@@ -66,8 +66,16 @@ function checkIconClicked() {
     var category = getCategoryId(groupEl, category);
     var task = getTask(taskEl, category);
 
-    // Remove task from tasks
+    console.log(event.target);
+    console.log("Task to remove:")
+    console.log(task);
+
+    // Remove task from task
     removeTask(task);
+
+    console.log("Tasks after removal");
+    var tasks = JSON.parse(localStorage.getItem("storeTasks"));
+    console.log(tasks)
 
     // Change task attributes
     task.status = "done";
@@ -75,17 +83,13 @@ function checkIconClicked() {
     task.finished = moment().toDate().getTime();
 
     // Add to done
-    var done = localStorage.getItem("storeDone");
-    if (done.length == 0) {
-        done = [tasks];
-    }
-    else {
-        done.push(task);
-    }
+    var done = JSON.parse(localStorage.getItem("storeDone"));
+    done.push(task);
     localStorage.setItem('storeDone', JSON.stringify(done));
 
-    // Remove html
-    var allTasks = findAncestorWithClass(taskEl, "all-tasks");
+    // Remove html - redraw categories and tasks
+    displayCategories();
+    displayTasks();
 
 }
 
@@ -188,8 +192,20 @@ function getTask(taskEl, taskCategory) {
 }
 
 function removeTask(task) {
+    console.log("removeTask()");
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
-    remove(tasks, task);
+    console.log("tasks before:");
+    console.log(tasks);
+    //remove(tasks, task);
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].name == task.name && tasks[i].category == task.category) {
+            // This task will be removed
+            tasks = tasks.slice(0, i).concat(tasks.slice(i + 1, tasks.length))
+            break;
+        }
+    }
+    
+    console.log("tasks after:");
     console.log(tasks)
     localStorage.setItem('storeTasks', JSON.stringify(tasks));
 }
