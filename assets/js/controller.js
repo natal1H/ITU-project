@@ -257,12 +257,9 @@ function removeGroupClick() {
     var groupEl = findAncestorWithClass(event.target, "group");
     var categoryName = groupEl.getElementsByTagName("h2")[0].innerHTML;
     var categoryId = getCategoryId(groupEl);
-    console.log(categoryName);
-    console.log(categoryId);
 
     // Get tasks in that category
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
-    console.log(tasks);
     
     var tasksInCategory = [];
     for (var i = 0; i < tasks.length; i++) {
@@ -270,13 +267,20 @@ function removeGroupClick() {
         if (tasks[i].category == categoryId) {
             tasksInCategory.push(tasks[i]);
         }
-    }
-    console.log("Tasks in that category:");
-    console.log(tasksInCategory);
-    
+    }    
+
     if (tasksInCategory.length > 0) {
         // Tasks in the category, ask if really delete
-        
+        var r = confirm("Group is not empty. Are you sure you want to remove it?");
+        if (r == true) {
+            // Remove all tasks that were in the category
+            for (var i = 0; i < tasksInCategory.length; i++) {
+                removeTask(tasksInCategory[i]);
+            }
+            removeCategory(categoryName);
+            lowerCategoryIds(categoryId);
+            lowerTaskCategoryIds(categoryId);
+        }
     }
     else {
         // Remove group immediately
@@ -284,9 +288,6 @@ function removeGroupClick() {
         lowerCategoryIds(categoryId);
         lowerTaskCategoryIds(categoryId);
     }
-
-    console.log(JSON.parse(localStorage.getItem('storeCategories')));
-    console.log(JSON.parse(localStorage.getItem('storeTasks')));
 
     // Redraw display
     displayCategories();
@@ -296,7 +297,6 @@ function removeGroupClick() {
 
 // Displaying model
 function displayCategories() {
-    console.log("displayCategories()");
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
     var htmlOutput = "";
     for (var i = 0; i < categories.length; i++) {
