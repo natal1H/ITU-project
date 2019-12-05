@@ -169,6 +169,16 @@ function taskAddNewSubmit() {
     displayTasks();
 }
 
+function getCategory(categoryId) {
+    var categories = JSON.parse(localStorage.getItem('storeCategories'));
+    for (var i = 0; i < categories.length; i++) {
+        if (categories[i].id == categoryId) {
+            return categories[i];
+        }
+    }
+    return null;
+}
+
 function getCategoryId(groupEl) {
     var heading = groupEl.getElementsByTagName("h2")[0].innerHTML;
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
@@ -294,6 +304,16 @@ function removeGroupClick() {
     displayTasks();
 }
 
+function taskDoubleClick() {
+    // First, get task and category from local storage
+    var groupEl = findAncestorWithClass(event.target, "group");
+    var categoryId = getCategoryId(groupEl);
+    var taskEl = findAncestorWithClass(event.target, "task");
+    var taskObj = getTask(taskEl, categoryId);
+    var categoryObj = getCategory(categoryId);
+
+    displayDialog(taskObj, categoryObj);
+}
 
 // Displaying model
 function displayCategories() {
@@ -344,7 +364,7 @@ function displayTasks() {
             dueDate = moment(task.due).format("D.M.YYYY");
 
         allTasksDiv.innerHTML += `
-        <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
+        <div class="task" ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
           <div class="task-header">
             <h3>${task.name}</h3>
             <i class="fa fa-play" onclick="playIconClicked()"></i>
@@ -395,7 +415,34 @@ function displayTasks() {
         </div>
         `;
     }
+}
 
+function displayDialog(taskObj, categoryObj) {
+    document.getElementById("myModal").innerHTML = `
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Modal Header</h2>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the Modal Body</p>
+        <p>Some other text...</p>
+      </div>
+      <div class="modal-footer">
+        <h3>Modal Footer</h3>
+      </div>
+    </div>
+    `
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
 }
 
 // Login page functions

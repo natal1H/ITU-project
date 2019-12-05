@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
     <title>Time Tracker</title>
+    <link rel="shortcut icon" type="image/png" href="assets/images/favicon.ico"/>
     <link rel="stylesheet" href="assets/css/tasks.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><!-- Icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script><!-- Icons -->
@@ -31,9 +32,36 @@
       <p>2019 &copy; <a href="mailto:xholko02@stud.fit.vutbr.cz">Natália Holková</a></p>
     </div>
 
+    <!-- Modal dialog -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Modal Header</h2>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the Modal Body</p>
+          <p>Some other text...</p>
+        </div>
+          <div class="modal-footer">
+            <h3>Modal Footer</h3>
+        </div>
+      </div>  
+    </div>
+
     <script>
       displayCategories();
       displayTasks();
+
+      var modal = document.getElementById("myModal");
+      if (modal.style.display != "none") {
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            closeModal();
+          }
+        }
+      }
     </script>
   </body>
 </html>
