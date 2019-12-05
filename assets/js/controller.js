@@ -420,24 +420,24 @@ function displayTasks() {
 function displayDialog(taskObj, categoryObj) {
     document.getElementById("myModal").getElementsByClassName("modal-body")[0].innerHTML = `
     <form name="dialog-form">
-      Name:<br>
-      <input type="text" value=""><br>
-      Description:<br>
-      <textarea></textarea><br>
-      Due:<br>
-      <input type="date"><br>
-      Estimated time:<br>
-      <input type="number"><br>
-      Elapsed time: ...<br>
-      Tarification:<br>
-      <input type="number" step="0.01"><br>
-      Priority:<br>
+      <p style="margin:5px 0 3px 0">Name:</p>
+      <input type="text" value="${taskObj.name}"><br>
+      <p style="margin:3px 0 3px 0">Description:</p>
+      <textarea>${taskObj.description}</textarea><br>
+      <p style="margin:0px 0 3px 0">Due:</p>
+      <input type="date" value="${moment(taskObj.due).format("YYYY-MM-DD")}"><br>
+      <p style="margin:3px 0 3px 0">Estimated time:</p>
+      <input type="number" value="${taskObj.timeEstimated}"><br>
+      <p style="margin:3px 0 3px 0">Elapsed time: ${taskObj.timeElapsed}</p> 
+      <p style="margin:3px 0 3px 0">Tarification:</p>
+      <input type="number" step="0.01" value="${taskObj.tarification}"><br>
+      <p style="margin:3px 0 3px 0">Priority:</p>
       <ul class="radion-buttons">
         <li><input type="radio" value="low"> Low</li>
         <li><input type="radio" value="medium"> Medium</li>
         <li><input type="radio" value="high"> High</li>
       </ul>
-      <button>Reset time</button>
+      <button>Reset time</button><br><br>
 
       <input type="submit" value="Save changes">
     </form>
