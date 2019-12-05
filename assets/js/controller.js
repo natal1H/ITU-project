@@ -63,7 +63,7 @@ function checkIconClicked() {
     console.log("Check icon clicked.");
     var taskEl = findAncestorWithClass(event.target, "task");
     var groupEl = findAncestorWithClass(taskEl, "group");
-    var category = getCategoryId(groupEl, category);
+    var category = getCategoryId(groupEl);
     var task = getTask(taskEl, category);
 
     console.log(event.target);
@@ -203,6 +203,38 @@ function removeTask(task) {
     localStorage.setItem('storeTasks', JSON.stringify(tasks));
 }
 
+function removeCategory(categoryName) {
+    var categories = JSON.parse(localStorage.getItem("storeCategories"))
+    for (var i = 0; i < categories.length; i++) {
+        if (categories[i].name == categoryName) {
+            // Remove this one
+            categories = categories.slice(0, i).concat(categories.slice(i + 1, categories.length))
+            break;
+        }
+    }
+    localStorage.setItem('storeCategories', JSON.stringify(categories));
+}
+
+function lowerCategoryIds(removedId) {
+    var categories = JSON.parse(localStorage.getItem("storeCategories"))
+    for (var i = 0; i < categories.length; i++) {
+        if (categories[i].id > removedId) {
+            categories[i].id--;
+        }
+    }
+    localStorage.setItem('storeCategories', JSON.stringify(categories)); 
+}
+
+function lowerTaskCategoryIds(removedId) {
+    var tasks = JSON.parse(localStorage.getItem("storeTasks"))
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].category > removedId) {
+            tasks[i].category--;
+        }
+    }
+    localStorage.setItem('storeTasks', JSON.stringify(tasks)); 
+}
+
 function getTaskForm(columnNum) {
     var groupEl = document.getElementsByClassName("group")[columnNum];
     var taskFormEl = groupEl.getElementsByClassName("task-add-form")[0].getElementsByTagName("form")[0];
@@ -221,14 +253,58 @@ function closeTaskAddForm() {
     replace(taskFormEl, taskAddEl);
 }
 
+function removeGroupClick() {
+    var groupEl = findAncestorWithClass(event.target, "group");
+    var categoryName = groupEl.getElementsByTagName("h2")[0].innerHTML;
+    var categoryId = getCategoryId(groupEl);
+    console.log(categoryName);
+    console.log(categoryId);
+
+    // Get tasks in that category
+    var tasks = JSON.parse(localStorage.getItem('storeTasks'));
+    console.log(tasks);
+    
+    var tasksInCategory = [];
+    for (var i = 0; i < tasks.length; i++) {
+        console.log(i);
+        if (tasks[i].category == categoryId) {
+            tasksInCategory.push(tasks[i]);
+        }
+    }
+    console.log("Tasks in that category:");
+    console.log(tasksInCategory);
+    
+    if (tasksInCategory.length > 0) {
+        // Tasks in the category, ask if really delete
+        
+    }
+    else {
+        // Remove group immediately
+        removeCategory(categoryName);
+        lowerCategoryIds(categoryId);
+        lowerTaskCategoryIds(categoryId);
+    }
+
+    console.log(JSON.parse(localStorage.getItem('storeCategories')));
+    console.log(JSON.parse(localStorage.getItem('storeTasks')));
+
+    // Redraw display
+    displayCategories();
+    displayTasks();
+}
+
+
 // Displaying model
 function displayCategories() {
+    console.log("displayCategories()");
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
     var htmlOutput = "";
     for (var i = 0; i < categories.length; i++) {
         htmlOutput += `
         <div class="group">
-          <h2>${categories[i].name}</h2>
+          <span><h2>${categories[i].name}</h2>
+
+          <i class="fa fa-close group-remove" onclick="removeGroupClick()"></i></span>
 
           <div class="all-tasks"></div>
         </div>

@@ -16,6 +16,8 @@ h1 {
 
 h2 {
   font-size: 1.5em;
+  width: 75%;
+  display: inline;
 }
 
 h3 {
@@ -139,6 +141,11 @@ h3 {
 #group-close-form {
   float: right;
   margin: 20px 5px 0px 0px;
+}
+
+.group-remove {
+  float: right;
+  margin: 5px 10px 0px 0px;
 }
 
 /* Single task block */
