@@ -63,11 +63,19 @@ function checkIconClicked() {
     console.log("Check icon clicked.");
     var taskEl = findAncestorWithClass(event.target, "task");
     var groupEl = findAncestorWithClass(taskEl, "group");
-    var category = getCategoryId(groupEl, category);
+    var category = getCategoryId(groupEl);
     var task = getTask(taskEl, category);
 
-    // Remove task from tasks
+    console.log(event.target);
+    console.log("Task to remove:")
+    console.log(task);
+
+    // Remove task from task
     removeTask(task);
+
+    console.log("Tasks after removal");
+    var tasks = JSON.parse(localStorage.getItem("storeTasks"));
+    console.log(tasks)
 
     // Change task attributes
     task.status = "done";
@@ -75,17 +83,13 @@ function checkIconClicked() {
     task.finished = moment().toDate().getTime();
 
     // Add to done
-    var done = localStorage.getItem("storeDone");
-    if (done.length == 0) {
-        done = [tasks];
-    }
-    else {
-        done.push(task);
-    }
+    var done = JSON.parse(localStorage.getItem("storeDone"));
+    done.push(task);
     localStorage.setItem('storeDone', JSON.stringify(done));
 
-    // Remove html
-    var allTasks = findAncestorWithClass(taskEl, "all-tasks");
+    // Remove html - redraw categories and tasks
+    displayCategories();
+    displayTasks();
 
 }
 
@@ -165,6 +169,16 @@ function taskAddNewSubmit() {
     displayTasks();
 }
 
+function getCategory(categoryId) {
+    var categories = JSON.parse(localStorage.getItem('storeCategories'));
+    for (var i = 0; i < categories.length; i++) {
+        if (categories[i].id == categoryId) {
+            return categories[i];
+        }
+    }
+    return null;
+}
+
 function getCategoryId(groupEl) {
     var heading = groupEl.getElementsByTagName("h2")[0].innerHTML;
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
@@ -189,15 +203,116 @@ function getTask(taskEl, taskCategory) {
 
 function removeTask(task) {
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
-    remove(tasks, task);
-    console.log(tasks)
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].name == task.name && tasks[i].category == task.category) {
+            // This task will be removed
+            tasks = tasks.slice(0, i).concat(tasks.slice(i + 1, tasks.length))
+            break;
+        }
+    }
     localStorage.setItem('storeTasks', JSON.stringify(tasks));
+}
+
+function removeCategory(categoryName) {
+    var categories = JSON.parse(localStorage.getItem("storeCategories"))
+    for (var i = 0; i < categories.length; i++) {
+        if (categories[i].name == categoryName) {
+            // Remove this one
+            categories = categories.slice(0, i).concat(categories.slice(i + 1, categories.length))
+            break;
+        }
+    }
+    localStorage.setItem('storeCategories', JSON.stringify(categories));
+}
+
+function lowerCategoryIds(removedId) {
+    var categories = JSON.parse(localStorage.getItem("storeCategories"))
+    for (var i = 0; i < categories.length; i++) {
+        if (categories[i].id > removedId) {
+            categories[i].id--;
+        }
+    }
+    localStorage.setItem('storeCategories', JSON.stringify(categories)); 
+}
+
+function lowerTaskCategoryIds(removedId) {
+    var tasks = JSON.parse(localStorage.getItem("storeTasks"))
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].category > removedId) {
+            tasks[i].category--;
+        }
+    }
+    localStorage.setItem('storeTasks', JSON.stringify(tasks)); 
 }
 
 function getTaskForm(columnNum) {
     var groupEl = document.getElementsByClassName("group")[columnNum];
     var taskFormEl = groupEl.getElementsByClassName("task-add-form")[0].getElementsByTagName("form")[0];
     return taskFormEl;
+}
+
+function closeGroupAddForm() {
+    var groupFormEl = event.target.parentElement.parentElement;
+    var groupAddEl = document.getElementById("group-add-new");
+    replace(groupFormEl, groupAddEl);
+}
+
+function closeTaskAddForm() {
+    var taskFormEl = findAncestorWithClass(event.target, "task-add-form");
+    var taskAddEl = taskFormEl.parentElement.getElementsByClassName("task-add-new")[0];
+    replace(taskFormEl, taskAddEl);
+}
+
+function removeGroupClick() {
+    var groupEl = findAncestorWithClass(event.target, "group");
+    var categoryName = groupEl.getElementsByTagName("h2")[0].innerHTML;
+    var categoryId = getCategoryId(groupEl);
+
+    // Get tasks in that category
+    var tasks = JSON.parse(localStorage.getItem('storeTasks'));
+    
+    var tasksInCategory = [];
+    for (var i = 0; i < tasks.length; i++) {
+        console.log(i);
+        if (tasks[i].category == categoryId) {
+            tasksInCategory.push(tasks[i]);
+        }
+    }    
+
+    if (tasksInCategory.length > 0) {
+        // Tasks in the category, ask if really delete
+        var r = confirm("Group is not empty. Are you sure you want to remove it?");
+        if (r == true) {
+            // Remove all tasks that were in the category
+            for (var i = 0; i < tasksInCategory.length; i++) {
+                removeTask(tasksInCategory[i]);
+            }
+            removeCategory(categoryName);
+            lowerCategoryIds(categoryId);
+            lowerTaskCategoryIds(categoryId);
+        }
+    }
+    else {
+        // Remove group immediately
+        removeCategory(categoryName);
+        lowerCategoryIds(categoryId);
+        lowerTaskCategoryIds(categoryId);
+    }
+
+    // Redraw display
+    displayCategories();
+    displayTasks();
+}
+
+function taskDoubleClick() {
+    // First, get task and category from local storage
+    var groupEl = findAncestorWithClass(event.target, "group");
+    var categoryId = getCategoryId(groupEl);
+    var taskEl = findAncestorWithClass(event.target, "task");
+    var taskObj = getTask(taskEl, categoryId);
+    var categoryObj = getCategory(categoryId);
+
+    displayDialog(taskObj, categoryObj);
 }
 
 // Displaying model
@@ -207,7 +322,9 @@ function displayCategories() {
     for (var i = 0; i < categories.length; i++) {
         htmlOutput += `
         <div class="group">
-          <h2>${categories[i].name}</h2>
+          <span><h2>${categories[i].name}</h2>
+
+          <i class="fa fa-close group-remove" onclick="removeGroupClick()"></i></span>
 
           <div class="all-tasks"></div>
         </div>
@@ -215,13 +332,14 @@ function displayCategories() {
     }
     htmlOutput += `
     <div id="group-add-new" onclick="groupAddNewClick()">
-      <h2>Add new group</h2>
+      <h2><span class="fas fa-plus"></span> Add new group</h2>
     </div>
 
     <div id="group-add-form" style="display:none">
       <form name="group-form" onsubmit="groupAddNewSubmit()">
         <input type="text" name="group-name" placeholder="Group name..." required><br>
-        <input type="submit" value="Add">      
+        <input type="submit" value="Add">     
+        <i class="fa fa-close" id="group-close-form" onclick="closeGroupAddForm()"></i> 
       </form>
     </div>
     `;
@@ -246,7 +364,7 @@ function displayTasks() {
             dueDate = moment(task.due).format("D.M.YYYY");
 
         allTasksDiv.innerHTML += `
-        <div class="task" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
+        <div class="task" ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
           <div class="task-header">
             <h3>${task.name}</h3>
             <i class="fa fa-play" onclick="playIconClicked()"></i>
@@ -278,7 +396,7 @@ function displayTasks() {
             <div class="task-optional" style="display:none;">
               <hr style="margin: 5px 0 10px 0">
               Due: <input type="date" class="task-due" name="task-due"><br>
-              Estimated time: <input type="number" class="estimated-time" name="task-estimated-time" min="1" max="5"><br>
+              Estimated time: <input type="number" class="estimated-time" name="task-estimated-time"><br>
               Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
               Priority:
               <ul class="radion-buttons">
@@ -292,11 +410,48 @@ function displayTasks() {
             </div>
   
             <input type="submit" value="Add">
+            <i class="fa fa-close task-close-form" onclick="closeTaskAddForm()"></i> 
           </form> 
         </div>
         `;
     }
+}
 
+function displayDialog(taskObj, categoryObj) {
+    document.getElementById("myModal").getElementsByClassName("modal-body")[0].innerHTML = `
+    <form name="dialog-form">
+      <p style="margin:5px 0 3px 0">Name:</p>
+      <input type="text" value="${taskObj.name}"><br>
+      <p style="margin:3px 0 3px 0">Description:</p>
+      <textarea>${taskObj.description}</textarea><br>
+      <p style="margin:0px 0 3px 0">Due:</p>
+      <input type="date" value="${moment(taskObj.due).format("YYYY-MM-DD")}"><br>
+      <p style="margin:3px 0 3px 0">Estimated time:</p>
+      <input type="number" value="${taskObj.timeEstimated}"><br>
+      <p style="margin:3px 0 3px 0">Elapsed time: ${taskObj.timeElapsed}</p> 
+      <p style="margin:3px 0 3px 0">Tarification:</p>
+      <input type="number" step="0.01" value="${taskObj.tarification}"><br>
+      <p style="margin:3px 0 3px 0">Priority:</p>
+      <ul class="radion-buttons">
+        <li><input type="radio" value="low"> Low</li>
+        <li><input type="radio" value="medium"> Medium</li>
+        <li><input type="radio" value="high"> High</li>
+      </ul>
+      <button>Reset time</button><br><br>
+
+      <input type="submit" value="Save changes">
+    </form>
+    `
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
 }
 
 // Login page functions
