@@ -2,6 +2,7 @@
 
 h1 {
   text-align: center;
+  color: #444444;
 }
 
 p {
@@ -10,7 +11,7 @@ p {
 
 .login-page {
   width: 360px;
-  padding: 4% 0 0;
+  padding: 25 0 0;
   margin: auto;
 }
 
@@ -41,11 +42,11 @@ p {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #bfbfbf;
+  background: #3c8dbc;
   width: 100%;
   border: 0;
   padding: 15px;
-  color: 4d4d4d;
+  color: white;
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
@@ -53,7 +54,7 @@ p {
 }
 
 .form input[type=submit]:hover,.form input[type=submit]:active,.form input[type=submit]:focus {
-  background: dodgerblue;
+  background: #367fa9;
   color: white;
 }
 
@@ -64,7 +65,7 @@ p {
 }
 
 .form .message a {
-  color: #4d4d4d;
+  color: #4290be;
   text-decoration: none;
 }
 
@@ -113,7 +114,7 @@ p {
 }
 
 body {
-  background: #e6e6e6; /* fallback for old browsers */
+  background: #d2d6de; 
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      

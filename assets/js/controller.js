@@ -332,7 +332,7 @@ function displayCategories() {
     }
     htmlOutput += `
     <div id="group-add-new" onclick="groupAddNewClick()">
-      <h2><span class="fas fa-plus"></span> Add new group</h2>
+      <h2><span class="fas fa-plus"></span> Add group</h2>
     </div>
 
     <div id="group-add-form" style="display:none">
@@ -384,7 +384,7 @@ function displayTasks() {
     for (var i = 0; i < categoryElements.length; i++) {
         categoryElements[i].getElementsByClassName("all-tasks")[0].innerHTML += `
         <div class="task-add-new" onclick="taskAddNewClick()">
-          <p><span class="fas fa-plus"></span> Add new task</p>
+          <p><span class="fas fa-plus"></span> Add task</p>
         </div>
   
         <div class="task-add-form" style="display:none">

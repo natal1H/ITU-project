@@ -7,7 +7,7 @@
 }
 
 body {
-  background-color: #f1f1f1;
+  background-color: #ecf0f5;
 }
 
 h1 {
@@ -28,9 +28,9 @@ h3 {
 /* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
-  background-color: #d9d9d9;
-  padding: 20px 10px;
-  margin: 0x
+  background-color: #3c8dbc;
+  padding: 5px 5px;
+  margin: 0x;
 }
 
   /* Style the header links */
@@ -49,7 +49,7 @@ h3 {
 .header h1 {
   margin: 0px;
   float: left;
-  color: black;
+  color: white;
   text-align: center;
   padding: 12px;
   text-decoration: none;
@@ -62,18 +62,19 @@ h3 {
   
 /* Change the background color on mouse-over */
 .header a:hover {
-  background-color: #a6a6a6;
-  color: black;
+  background-color: #00c2e0;
+  color: white;
 }
 
-/* Style the active/current link*/
-.header a.active {
-  background-color: dodgerblue;
+.header a {
+  background-color: #659fc1;
   color: white;
+  margin-left: 5px;
 }
 
 /* Float the link section to the right */
 .header-right {
+  height: 50px;
   float: right;
 }
 
@@ -98,6 +99,7 @@ h3 {
   flex: 1;
   max-width: 300px;
   background-color: #ffffff;
+  color: #2a2a2a;
   margin-right: 15px;
   padding: 10px 5px 5px 5px;
   border-radius: 8px;
@@ -109,8 +111,8 @@ h3 {
 }
 
 #group-add-new:hover {
-  background-color: #a6a6a6;
-  color: white;
+  background-color: #d9dce2;
+  color: #2a2a2a;
 }
 
 #group-add-form input[type=text] {
@@ -150,10 +152,11 @@ h3 {
 
 /* Single task block */
 .task, .task-add-new, .task-add-form {
-  background-color: #e6e6e6;
+  background-color: #ebecf0;
   padding: 5px;
   margin-bottom: 10px;
-  border-radius: 8px;;
+  border-radius: 8px;
+  color: #2a2a2a;
 }
 
 .task-add-new p {
@@ -161,8 +164,8 @@ h3 {
 }
 
 .task-add-new:hover {
-  background-color: #a6a6a6;
-  color: white;
+  background-color: #d9dce2;
+  color: #2a2a2a;
 }
 
 .task-add-form input[type=text] {
@@ -266,13 +269,13 @@ h3 {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #d9d9d9;
-  color: black;
+  background-color: white;
+  color: #2a2a2a;
   text-align: center;
 }
 
 .footer a {
-  color: black;
+  color: #2a2a2a;
   text-decoration: none;
 }
 
@@ -366,4 +369,8 @@ h3 {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.links-div {
+  display: inline-block;
 }
