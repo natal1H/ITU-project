@@ -192,11 +192,7 @@ function getTask(taskEl, taskCategory) {
 }
 
 function removeTask(task) {
-    console.log("removeTask()");
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
-    console.log("tasks before:");
-    console.log(tasks);
-    //remove(tasks, task);
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].name == task.name && tasks[i].category == task.category) {
             // This task will be removed
@@ -204,9 +200,6 @@ function removeTask(task) {
             break;
         }
     }
-    
-    console.log("tasks after:");
-    console.log(tasks)
     localStorage.setItem('storeTasks', JSON.stringify(tasks));
 }
 
@@ -214,6 +207,18 @@ function getTaskForm(columnNum) {
     var groupEl = document.getElementsByClassName("group")[columnNum];
     var taskFormEl = groupEl.getElementsByClassName("task-add-form")[0].getElementsByTagName("form")[0];
     return taskFormEl;
+}
+
+function closeGroupAddForm() {
+    var groupFormEl = event.target.parentElement.parentElement;
+    var groupAddEl = document.getElementById("group-add-new");
+    replace(groupFormEl, groupAddEl);
+}
+
+function closeTaskAddForm() {
+    var taskFormEl = findAncestorWithClass(event.target, "task-add-form");
+    var taskAddEl = taskFormEl.parentElement.getElementsByClassName("task-add-new")[0];
+    replace(taskFormEl, taskAddEl);
 }
 
 // Displaying model
@@ -231,13 +236,14 @@ function displayCategories() {
     }
     htmlOutput += `
     <div id="group-add-new" onclick="groupAddNewClick()">
-      <h2>Add new group</h2>
+      <h2><span class="fas fa-plus"></span> Add new group</h2>
     </div>
 
     <div id="group-add-form" style="display:none">
       <form name="group-form" onsubmit="groupAddNewSubmit()">
         <input type="text" name="group-name" placeholder="Group name..." required><br>
-        <input type="submit" value="Add">      
+        <input type="submit" value="Add">     
+        <i class="fa fa-close" id="group-close-form" onclick="closeGroupAddForm()"></i> 
       </form>
     </div>
     `;
@@ -308,6 +314,7 @@ function displayTasks() {
             </div>
   
             <input type="submit" value="Add">
+            <i class="fa fa-close task-close-form" onclick="closeTaskAddForm()"></i> 
           </form> 
         </div>
         `;
