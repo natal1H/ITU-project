@@ -312,7 +312,47 @@ function taskDoubleClick() {
     var taskObj = getTask(taskEl, categoryId);
     var categoryObj = getCategory(categoryId);
 
+    console.log(taskObj);
+    console.log(categoryObj);
+    localStorage.setItem('storeClickedTask', JSON.stringify(taskObj));
+    localStorage.setItem('storeClickedCategory', JSON.stringify(categoryObj));
+    console.log(JSON.parse(localStorage.getItem("storeClickedTask")));
+    console.log(JSON.parse(localStorage.getItem("storeClickedCategory")));
+
     displayDialog(taskObj, categoryObj);
+}
+
+function updateTask(taskNew) {
+    var tasks = JSON.parse(localStorage.getItem("storeTasks"));
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id == taskNew.id) {
+            // Update this task
+            tasks[i].name = taskNew.name;
+            tasks[i].category = taskNew.category;
+            tasks[i].description = taskNew.description;
+            tasks[i].timeElapsed = taskNew.timeElapsed;
+            tasks[i].timeEstimated = taskNew.timeEstimated;
+            tasks[i].due = taskNew.due;
+            tasks[i].priority = taskNew.priority;
+            tasks[i].tarification = taskNew.tarification;
+            tasks[i].status = taskNew.status;
+            tasks[i].finished = taskNew.finished;
+        }
+    }
+    localStorage.setItem('storeTasks', JSON.stringify(tasks));    
+    console.log("Task updated")
+}
+
+function resetTimeClick() {
+    console.log("Refresh time clicked.");
+
+    // Get clicked task
+    var task = JSON.parse(localStorage.getItem("storeClickedTask"));
+    task.timeElapsed = 0;
+    updateTask(task);
+
+    // Redraw elapsed time
+    document.getElementById("elapsed-p").innerHTML = "Elapsed time: " + secondsToTimeFormat(task.timeElapsed);
 }
 
 // Displaying model
@@ -428,7 +468,7 @@ function displayDialog(taskObj, categoryObj) {
       <input type="date" value="${moment(taskObj.due).format("YYYY-MM-DD")}"><br>
       <p style="margin:3px 0 3px 0">Estimated time:</p>
       <input type="number" value="${taskObj.timeEstimated}"><br>
-      <p style="margin:3px 0 3px 0">Elapsed time: ${taskObj.timeElapsed}</p> 
+      <p id="elapsed-p" style="margin:3px 0 3px 0">Elapsed time: ${secondsToTimeFormat(taskObj.timeElapsed)}</p> 
       <p style="margin:3px 0 3px 0">Tarification:</p>
       <input type="number" step="0.01" value="${taskObj.tarification}"><br>
       <p style="margin:3px 0 3px 0">Priority:</p>
@@ -437,7 +477,7 @@ function displayDialog(taskObj, categoryObj) {
         <li><input type="radio" value="medium"> Medium</li>
         <li><input type="radio" value="high"> High</li>
       </ul>
-      <button>Reset time</button><br><br>
+      <button type="button" onclick="resetTimeClick()">Reset time</button><br><br>
 
       <input type="submit" value="Save changes">
     </form>

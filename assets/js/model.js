@@ -8,7 +8,7 @@ var tasks = [
         name: "Buy train ticket",
         category: 0,
         description: "Buy train ticket to go home",
-        timeElapsed: 0,
+        timeElapsed: 5,
         timeEstimated: 1, // h
         due: new Date(Date.UTC(2019, 12, 24)),
         priority: "no-priority",
@@ -41,3 +41,4 @@ if (localStorage.getItem("storeDone") === null)
     localStorage.setItem('storeDone', JSON.stringify(done));
 if (localStorage.getItem("storeUser") === null)
     localStorage.setItem('storeUser', JSON.stringify(user));
+    
