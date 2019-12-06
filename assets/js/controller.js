@@ -371,7 +371,7 @@ function displayTasks() {
             <i class="fa fa-pause" style="display:none" onclick="pauseIconClicked()"></i>
           </div>
 
-          <p class="elapsed-time">Time elapsed: ${task.timeElapsed}</p>
+          <p class="elapsed-time">Time elapsed: ${secondsToTimeFormat(task.timeElapsed)}</p>
           <p class="check-due">
           </span><span class="due-date">Due: ${dueDate}</span>
           <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
@@ -478,4 +478,18 @@ function findAncestorWithClass(el, sel) {
 function remove(array, element) {
     const index = array.indexOf(element);
     array.splice(index, 1);
+}
+
+function secondsToTimeFormat(seconds) {
+    var hours   = Math.floor(seconds / 3600);
+    var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+    var seconds = seconds - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) 
+        hours   = "0" + hours;
+    if (minutes < 10) 
+        minutes = "0" + minutes;
+    if (seconds < 10) 
+        seconds = "0" + seconds;
+    return hours + ':' + minutes + ':'+ seconds;
 }
