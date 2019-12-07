@@ -572,8 +572,8 @@ function displayTasks() {
         // priority
         var priorityColor;
         if (task.priority == "no-priority") priorityColor = 'style="background-color:#ebecf0"';
-        else if (task.priority == "low") priorityColor = 'style="background-color:#ccffcc"';
-        else if (task.priority == "medium") priorityColor = 'style="background-color:#ffffcc"';
+        else if (task.priority == "low") priorityColor = 'style="background-color:#e6ffe6"';
+        else if (task.priority == "medium") priorityColor = 'style="background-color:#ffcc99"';
         else if (task.priority == "high") priorityColor = 'style="background-color:#ff9999"';
         // Due color
         var dueColor = "";
@@ -693,59 +693,6 @@ function displayDialog(taskObj, categoryObj) {
 function closeModal() {
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
-}
-
-// Login page functions
-/**
- * Redirect to page with tasks
- */
-function redirect() {
-    window.location.replace("tasks.html");
-    return false;
-}
-
-/**
- * Hide login form, show register form
- */
-function createAccountClick() {
-    document.getElementsByClassName("register-form")[0].style.display = "block";
-    document.getElementsByClassName("login-form")[0].style.display = "none";
-}
-
-/**
- * Hide register form, show login form
- */
-function signInClick() {
-    document.getElementsByClassName("register-form")[0].style.display = "none";
-    document.getElementsByClassName("login-form")[0].style.display = "block";
-}
-
-// Stats page functions
-/**
- * Show content with general statistics, hide others
- */
-function generalStatsClick() {
-    document.getElementsByClassName("general-content")[0].style.display = "inline-block";
-    document.getElementsByClassName("graphs-content")[0].style.display = "none";
-    document.getElementsByClassName("tarification-content")[0].style.display = "none";
-}
-
-/**
- * Show content with graphs, hide others
- */
-function graphsStatsClick() {
-    document.getElementsByClassName("general-content")[0].style.display = "none";
-    document.getElementsByClassName("graphs-content")[0].style.display = "inline-block";
-    document.getElementsByClassName("tarification-content")[0].style.display = "none";
-}
-
-/**
- * Show content with tarification statistics, hide others
- */
-function tarificationStatsClick() {
-    document.getElementsByClassName("general-content")[0].style.display = "none";
-    document.getElementsByClassName("graphs-content")[0].style.display = "none";
-    document.getElementsByClassName("tarification-content")[0].style.display = "inline-block";
 }
 
 // Helpful functions
