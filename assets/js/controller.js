@@ -597,6 +597,16 @@ function redirect() {
     return false;
 }
 
+function createAccountClick() {
+    document.getElementsByClassName("register-form")[0].style.display = "block";
+    document.getElementsByClassName("login-form")[0].style.display = "none";
+}
+
+function signInClick() {
+    document.getElementsByClassName("register-form")[0].style.display = "none";
+    document.getElementsByClassName("login-form")[0].style.display = "block";
+}
+
 // Helpful functions
 function replace(hide, show) {
     hide.style.display="none";
