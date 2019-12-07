@@ -607,6 +607,26 @@ function signInClick() {
     document.getElementsByClassName("login-form")[0].style.display = "block";
 }
 
+// Stats page functions
+
+function generalStatsClick() {
+    document.getElementsByClassName("general-content")[0].style.display = "inline-block";
+    document.getElementsByClassName("graphs-content")[0].style.display = "none";
+    document.getElementsByClassName("tarification-content")[0].style.display = "none";
+}
+
+function graphsStatsClick() {
+    document.getElementsByClassName("general-content")[0].style.display = "none";
+    document.getElementsByClassName("graphs-content")[0].style.display = "inline-block";
+    document.getElementsByClassName("tarification-content")[0].style.display = "none";
+}
+
+function tarificationStatsClick() {
+    document.getElementsByClassName("general-content")[0].style.display = "none";
+    document.getElementsByClassName("graphs-content")[0].style.display = "none";
+    document.getElementsByClassName("tarification-content")[0].style.display = "inline-block";
+}
+
 // Helpful functions
 function replace(hide, show) {
     hide.style.display="none";
