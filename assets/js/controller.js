@@ -411,19 +411,19 @@ function deleteTaskClick() {
 
 function updateElapsedTime() {
     var tasks = JSON.parse(localStorage.getItem("storeTasks"));
-    var needsRedraw = false;
+    //var needsRedraw = false;
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].status == "active") {
             tasks[i].timeElapsed++;
-            needsRedraw = true;
+            //needsRedraw = true;
         }
     }
     localStorage.setItem('storeTasks', JSON.stringify(tasks));
 
-    if (needsRedraw) {
-        displayCategories();
-        displayTasks();
-    }
+    //if (needsRedraw) {
+    //    displayCategories();
+    //    displayTasks();
+    //}
 }
 
 // Displaying model

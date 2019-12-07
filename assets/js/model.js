@@ -18,12 +18,12 @@ var tasks = [
     },
     {
         id: 1,
-        name: "Design website",
+        name: "Present the project",
         category: 1,
-        description: "Design website for ITU project",
+        description: "Present the project for ITU",
         timeElapsed: 0,
-        timeEstimated: 3, // h
-        due: new Date(Date.UTC(2019, 12, 8)),
+        timeEstimated: 2, // h
+        due: new Date(Date.UTC(2019, 12, 19)),
         priority: "high",
         tarification: 0.0,
         status: "paused",

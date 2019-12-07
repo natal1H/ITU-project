@@ -26,14 +26,52 @@
       </div>
     </div>
 
-    <div>
-      <!-- SIDE MENU -->
-      <div class="side-menu">
-        <a href="">General</a>
-        <a href="">Graphs</a>
-        <a href="">Tarification</a>
+    <!-- SIDE MENU -->
+    <div class="side-menu">
+      <a href="" onclick="generalStatsClick()">General</a>
+      <a href="" onclick="generalStatsClick()">Graphs</a>
+      <a href="" onclick="generalStatsClick()">Tarification</a>
+    </div>
+
+    <div class="content-wrapper">
+      <!-- Content for "General" -->
+      <div class="general-content">
+        <h2>General</h2>
+
+        <h3>Completed tasks</h3>
+
+        <p style="font-weight:bold;">Total: 5</p>
+        <p>
+          Completed by groups:
+          <ul>
+            <li>Uncategorized: 3</li>
+            <li>School: 2</li>
+          </ul>
+        </p>
+
+        <hr>
+
+        <h3>Remaining tasks</h3>
+
+        <p style="font-weight:bold;">Total: 2</p>
+        <p>
+          Completed by groups:
+          <ul>
+            <li>Uncategorized: 1</li>
+            <li>School: 1</li>
+          </ul>
+        </p>
       </div>
 
+      <!-- Content for "Graphs" -->
+      <div class="graphs-content" style="display:none">
+          <h1>Graphs</h1>
+      </div>
+
+      <!-- Content for "Tarification" -->
+      <div class="tarification-content" style="display:none">
+          <h1>Tarification</h1>
+      </div>
     </div>
 
     <div class="footer">
