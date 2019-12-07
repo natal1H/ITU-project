@@ -1,4 +1,4 @@
-var user = {login: "xlogin00", password: "12345"};
+var user = {login: "xlogin00", password: "12345", email: "login@mail.com"};
 
 var categories = [{id: 0, name: "Uncategorized"}, {id: 1, name: "School"}];
 

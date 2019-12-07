@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/css/stats.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><!-- Icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script><!-- Icons -->
-    <script src="assets/js/controller.js"></script> 
+    <script src="assets/js/controller-stats.js"></script> 
     <script src="assets/js/model.js"></script><!-- Model data --> 
     <script src="https://unpkg.com/moment"></script><!-- Moment.js library -->
   </head>
@@ -52,8 +52,8 @@
         <p>
           Completed by groups:
           <ul>
-            <li>Uncategorized: 3</li>
-            <li>School: 2</li>
+            <li>Uncategorized: <span style="font-weight:bold">3</span></li>
+            <li>School: <span style="font-weight:bold">2</span></li>
           </ul>
         </p>
 
@@ -63,10 +63,24 @@
         <p>
           Remaining by groups:
           <ul>
-            <li>Uncategorized: 1</li>
-            <li>School: 1</li>
+            <li>Uncategorized: <span style="font-weight:bold">1</span></li>
+            <li>School: <span style="font-weight:bold">1</span></li>
           </ul>
         </p>
+
+        <p>
+          Remaining by priority:
+          <ul>
+            <li>No priority: <span style="font-weight:bold">0</span></li>
+            <li>Low: <span style="font-weight:bold">0</span></li>
+            <li>Medium: <span style="font-weight:bold">0</span></li>
+            <li>High: <span style="font-weight:bold">1</span></li>
+          </ul>
+        </p>
+
+        <p>Number of remaining tasks past due: <span style="font-weight:bold;color:green;">0</span></p>
+
+        
       </div>
 
       <!-- Content for "Graphs" -->
@@ -86,12 +100,12 @@
       <div class="tarification-content" style="display:none">
           <h2>Tarification</h2>
 
-          <p>Total: 1.23 €</p>
+          <p style="font-weight:bold">Total: 1.23 €</p>
 
           <p style="font-weight:bold;">Tarification by groups:
             <ul>
-              <li>Uncategorized: 1.23 €</li>
-              <li>School: 0 €</li>
+              <li>Uncategorized: <span style="font-weight:bold">1.23 €</span></li>
+              <li>School: <span style="font-weight:bold">0 €</span></li>
             </ul>
           </p>
       </div>
