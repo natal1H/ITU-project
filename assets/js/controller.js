@@ -353,6 +353,23 @@ function resetTimeClick() {
     document.getElementById("elapsed-p").innerHTML = "Elapsed time: " + secondsToTimeFormat(task.timeElapsed);
 }
 
+function dialogSaveSubmit() {
+    var task = JSON.parse(localStorage.getItem("storeClickedTask"));
+
+    // Get all the input from dialog
+    var dialogForm = document.forms["dialog-form"];
+    task.name = dialogForm["dialog-name"].value;
+    task.description = dialogForm.getElementsByTagName("textarea")[0].innerHTML;
+    task.due = dialogForm["dialog-due"].value;
+    task.timeEstimated = dialogForm["dialog-time-estimated"].value;
+    task.tarification = dialogForm["dialog-tarification"].value;
+    task.priority = dialogForm["dialog-priority"].value;
+
+    // Update task
+    updateTask(task);
+
+}
+
 // Displaying model
 function displayCategories() {
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
@@ -471,24 +488,24 @@ function displayDialog(taskObj, categoryObj) {
     if (taskObj.priority == "high") highChecked = "checked";
 
     document.getElementById("myModal").getElementsByClassName("modal-body")[0].innerHTML = `
-    <form name="dialog-form">
+    <form name="dialog-form" onsubmit="dialogSaveSubmit()">
       <p style="margin:5px 0 3px 0">Name:</p>
-      <input type="text" value="${taskObj.name}"><br>
+      <input name="dialog-name" type="text" value="${taskObj.name}"><br>
       <p style="margin:3px 0 3px 0">Description:</p>
       <textarea>${taskObj.description}</textarea><br>
       <p style="margin:0px 0 3px 0">Due:</p>
-      <input type="date" value="${moment(taskObj.due).format("YYYY-MM-DD")}"><br>
+      <input name="dialog-due" type="date" value="${moment(taskObj.due).format("YYYY-MM-DD")}"><br>
       <p style="margin:3px 0 3px 0">Estimated time:</p>
-      <input type="number" value="${taskObj.timeEstimated}"><br>
+      <input name="dialog-time-estimated" type="number" value="${taskObj.timeEstimated}"><br>
       <p id="elapsed-p" style="margin:3px 0 3px 0">Elapsed time: ${secondsToTimeFormat(taskObj.timeElapsed)}</p> 
       <p style="margin:3px 0 3px 0">Tarification:</p>
-      <input type="number" step="0.01" value="${taskObj.tarification}"><br>
+      <input name="dialog-tarification" type="number" step="0.01" value="${taskObj.tarification}"><br>
       <p style="margin:3px 0 3px 0">Priority:</p>
       <ul class="radion-buttons">
-        <li><input type="radio" value="no-prioriy" ${noneChecked}> None</li>
-        <li><input type="radio" value="low" ${lowChecked}> Low</li>
-        <li><input type="radio" value="medium" ${mediumChecked}> Medium</li>
-        <li><input type="radio" value="high" ${highChecked}> High</li>
+        <li><input name="dialog-priority" type="radio" value="no-prioriy" ${noneChecked}> None</li>
+        <li><input name="dialog-priority" type="radio" value="low" ${lowChecked}> Low</li>
+        <li><input name="dialog-priority" type="radio" value="medium" ${mediumChecked}> Medium</li>
+        <li><input name="dialog-priority" type="radio" value="high" ${highChecked}> High</li>
       </ul>
       <button type="button" onclick="resetTimeClick()">Reset time</button><br><br>
 
