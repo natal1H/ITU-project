@@ -22,23 +22,27 @@ p {
 .edit{
   text-align: center;
   margin: auto;
-  border-spacing: 15px;
+  border-spacing: 10px;
+  padding: 30px;
 }
 
 .user{
   text-align: center;
+  margin: auto;
 }
 
 .notifications{
   text-align: center;
-  margin: auto;
+  padding: 10px;
 }
 /* Style the header with a grey background and some padding */
 .header {
+  position: fixed;
+  width: 100%;
   overflow: hidden;
-  background-color: #d9d9d9;
-  padding: 20px 10px;
-  margin: 0x
+  background-color: #3c8dbc;
+  padding: 5px 5px;
+  margin: 0x;
 }
   
 /* Style the header links */
@@ -52,12 +56,12 @@ p {
   line-height: 25px;
   border-radius: 4px;
 }
-  
+
 /* Style the header text */
 .header h1 {
   margin: 0px;
   float: left;
-  color: black;
+  color: white;
   text-align: center;
   padding: 12px;
   text-decoration: none;
@@ -70,14 +74,14 @@ p {
     
 /* Change the background color on mouse-over */
 .header a:hover {
-  background-color: #a6a6a6;
-  color: black;
-}
-  
-/* Style the active/current link*/
-.header a.active {
-  background-color: dodgerblue;
+  background-color: #00c2e0;
   color: white;
+}
+
+.header a {
+  background-color: #659fc1;
+  color: white;
+  margin-left: 5px;
 }
   
 /* Float the link section to the right */
@@ -99,11 +103,12 @@ p {
   color: black;
   text-decoration: none;
 }
-.Settings{
+.settings{
   text-align: center;
+  padding: 90px;
 }
 
-.Settings input[type=submit] {
+.settings input[type=submit] {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -119,7 +124,7 @@ p {
   cursor: pointer;
 }
 
-.Settings input[type=submit]:hover,.form input[type=submit]:active,.form input[type=submit]:focus {
+.settings input[type=submit]:hover,.form input[type=submit]:active,.form input[type=submit]:focus {
   background: #367fa9;
   color: white;
 }
