@@ -51,12 +51,32 @@ function playIconClicked() {
     var playIcon = event.target;
     var pauseIcon = playIcon.parentElement.getElementsByClassName('fa fa-pause')[0];
     replace(playIcon, pauseIcon);
+
+    // Change task status to "active"
+    var taskEl = findAncestorWithClass(event.target, "task");
+    var categoryEl = findAncestorWithClass(event.target, "group");
+    var categoryId = getCategoryId(categoryEl);
+    var taskObj = getTask(taskEl, categoryId);
+    taskObj.status = "active";
+
+    // Update task
+    updateTask(taskObj);
 }
 
 function pauseIconClicked() {
     var pauseIcon = event.target;
     var playIcon = pauseIcon.parentElement.getElementsByClassName('fa fa-play')[0];
     replace(pauseIcon, playIcon);
+
+    // Change task status to "paused"
+    var taskEl = findAncestorWithClass(event.target, "task");
+    var categoryEl = findAncestorWithClass(event.target, "group");
+    var categoryId = getCategoryId(categoryEl);
+    var taskObj = getTask(taskEl, categoryId);
+    taskObj.status = "paused";
+
+    // Update task
+    updateTask(taskObj);
 }
 
 function checkIconClicked() {
@@ -190,7 +210,9 @@ function getCategoryId(groupEl) {
 
 function getTask(taskEl, taskCategory) {
     var heading = taskEl.getElementsByTagName("h3")[0].innerHTML;
+    console.log(heading);
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
+    console.log(tasks);
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].name == heading && tasks[i].category == taskCategory) {
             return tasks[i];
@@ -370,12 +392,27 @@ function dialogSaveSubmit() {
 }
 
 function deleteTaskClick() {
-    var task = JSON.parse(localStorage.getItem("storeClickedTask"));
-    // Remove this task
-    removeTask(task);
-    // Close modal dialog
-    closeModal();
-    // Redraw screen
+    var r = confirm("Are you sure you want to delete this task?");
+    if (r == true) {
+        var task = JSON.parse(localStorage.getItem("storeClickedTask"));
+        // Remove this task
+        removeTask(task);
+        // Close modal dialog
+        closeModal();
+        // Redraw screen
+        displayCategories();
+        displayTasks();
+    }
+}
+
+function updateElapsedTime() {
+    var tasks = JSON.parse(localStorage.getItem("storeTasks"));
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].status == "active")
+            tasks[i].timeElapsed++;
+    }
+    localStorage.setItem('storeTasks', JSON.stringify(tasks));
+
     displayCategories();
     displayTasks();
 }
@@ -389,7 +426,7 @@ function displayCategories() {
         <div class="group">
           <span><h2>${categories[i].name}</h2>
 
-          <i class="fa fa-close group-remove" onclick="removeGroupClick()"></i></span>
+          <i title="Delete" class="fa fa-close group-remove" onclick="removeGroupClick()"></i></span>
 
           <div class="all-tasks"></div>
         </div>
@@ -437,19 +474,25 @@ function displayTasks() {
         var dueColor = "";
         if (isDueToday(task.due) || isPastDue(task.due))
             dueColor = "style='color:red'";
+        // Status
+        var playDisplay = "", pauseDisplay = "";
+        if (task.status == "active")
+            playDisplay = "style='display:none'";
+        else if (task.status == "paused")
+            pauseDisplay = "style='display:none'";
 
         allTasksDiv.innerHTML += `
         <div class="task" ${priorityColor} ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
           <div class="task-header">
             <h3>${task.name}</h3>
-            <i class="fa fa-play" onclick="playIconClicked()"></i>
-            <i class="fa fa-pause" style="display:none" onclick="pauseIconClicked()"></i>
+            <i title="Start timer" class="fa fa-play" ${playDisplay} onclick="playIconClicked()"></i>
+            <i title="Pause" class="fa fa-pause" ${pauseDisplay} onclick="pauseIconClicked()"></i>
           </div>
 
           <p class="elapsed-time">Time elapsed: ${secondsToTimeFormat(task.timeElapsed)}</p>
           <p class="check-due">
           </span><span class="due-date" ${dueColor}>Due: ${dueDate}</span>
-          <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
+          <span title="Done" class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
           </p>
         </div>
         `;
@@ -524,7 +567,7 @@ function displayDialog(taskObj, categoryObj) {
       <button type="button" onclick="resetTimeClick()">Reset time</button><br><br>
 
       <input type="submit" value="Save changes">
-      <i class="fa fa-trash" style="float:right;margin:5px 30px 0 0;" onclick="deleteTaskClick()"></i>
+      <i title="Delete" class="fa fa-trash" style="float:right;margin:5px 30px 0 0;" onclick="deleteTaskClick()"></i>
     </form>
     `
 
@@ -543,7 +586,7 @@ function closeModal() {
 function redirect() {
     window.location.replace("tasks.html");
     return false;
-  }
+}
 
 // Helpful functions
 function replace(hide, show) {
