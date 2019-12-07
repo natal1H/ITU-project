@@ -1,3 +1,6 @@
+/**
+ * Hide button "Add group" and unhide form to for adding groups
+ */
 function groupAddNewClick() {   
     // Get div element
     var hideElement = event.target;
@@ -10,6 +13,9 @@ function groupAddNewClick() {
     replace(hideElement, showElement)
 }
 
+/**
+ * On submit of group form add new group and redraw page
+ */
 function groupAddNewSubmit() {
     var categoryName = document.forms["group-form"]["group-name"].value;
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
@@ -21,6 +27,9 @@ function groupAddNewSubmit() {
     displayTasks();
 }
 
+/**
+ * When mouse enters task space, display "check" icon
+ */
 function taskMouseEnter() {
     // Get the div element if hovering over something else
     var taskElement = event.target;
@@ -34,6 +43,9 @@ function taskMouseEnter() {
     changeVisibility(checkIcon, "inline-block");
 }
 
+/**
+ * When mouse leave task space, hide "check" icon
+ */
 function taskMouseLeave() {
     // Get the div element if hovering over something else
     var taskElement = event.target;
@@ -47,6 +59,9 @@ function taskMouseLeave() {
     changeVisibility(checkIcon, "none");
 }
 
+/**
+ * After clicking "play" icon, change task status to "active" and begin timer
+ */
 function playIconClicked() {
     var playIcon = event.target;
     var pauseIcon = playIcon.parentElement.getElementsByClassName('fa fa-pause')[0];
@@ -63,6 +78,9 @@ function playIconClicked() {
     updateTask(taskObj);
 }
 
+/**
+ * After clicking "pause" icon, change task status to "paused" and stop timer
+ */
 function pauseIconClicked() {
     var pauseIcon = event.target;
     var playIcon = pauseIcon.parentElement.getElementsByClassName('fa fa-play')[0];
@@ -79,6 +97,9 @@ function pauseIconClicked() {
     updateTask(taskObj);
 }
 
+/**
+ * After clicking "Done" option, remove task from active ones and redraw page
+ */
 function checkIconClicked() {
     console.log("Check icon clicked.");
     var taskEl = findAncestorWithClass(event.target, "task");
@@ -113,6 +134,9 @@ function checkIconClicked() {
 
 }
 
+/**
+ * Expand formular for adding tasks to reveal optional options
+ */
 function taskAddExpand() {
     var srcElement = event.target;
     if (srcElement.className != "task-expand") 
@@ -131,6 +155,9 @@ function taskAddExpand() {
     }
 }
 
+/**
+ * Reveal formular for adding tasks, if other was already opened, close that one first
+ */
 function taskAddNewClick() {
     var srcElement = event.target;
     if (srcElement.className != "task-add-new")
@@ -151,13 +178,15 @@ function taskAddNewClick() {
     replace(srcElement, formElement);
 }
 
+/**
+ * Get info from form, create new task and redraw page
+ */
 function taskAddNewSubmit() {
     // Get task category
     var groupEl = findAncestorWithClass(event.target, "group");
     var taskCategory = getCategoryId(groupEl);
     var taskForm = getTaskForm(taskCategory);
 
-    //var taskName = document.forms["task-form"]["task-name"].value;
     var taskName = taskForm["task-name"].value;   
     
     var taskDue = taskForm["task-due"].value;
@@ -187,6 +216,10 @@ function taskAddNewSubmit() {
     displayTasks();
 }
 
+/**
+ * Get category object based on id
+ * @param {number} categoryId Id of category
+ */
 function getCategory(categoryId) {
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
     for (var i = 0; i < categories.length; i++) {
@@ -197,6 +230,10 @@ function getCategory(categoryId) {
     return null;
 }
 
+/**
+ * Get category id based on html element heading
+ * @param {*} groupEl html element representing group
+ */
 function getCategoryId(groupEl) {
     var heading = groupEl.getElementsByTagName("h2")[0].innerHTML;
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
@@ -208,6 +245,11 @@ function getCategoryId(groupEl) {
     return -1;
 }
 
+/**
+ * Get task object from task html element and id of category
+ * @param {*} taskEl html task element
+ * @param {*} taskCategory id of category
+ */
 function getTask(taskEl, taskCategory) {
     var heading = taskEl.getElementsByTagName("h3")[0].innerHTML;
     console.log(heading);
@@ -221,6 +263,10 @@ function getTask(taskEl, taskCategory) {
     return none;
 }
 
+/**
+ * Remove task object from list of remaining tasks
+ * @param {*} task Task object
+ */
 function removeTask(task) {
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
     for (var i = 0; i < tasks.length; i++) {
@@ -233,6 +279,10 @@ function removeTask(task) {
     localStorage.setItem('storeTasks', JSON.stringify(tasks));
 }
 
+/**
+ * Remove group based on group name
+ * @param {*} categoryName Category name
+ */
 function removeCategory(categoryName) {
     var categories = JSON.parse(localStorage.getItem("storeCategories"))
     for (var i = 0; i < categories.length; i++) {
@@ -245,6 +295,10 @@ function removeCategory(categoryName) {
     localStorage.setItem('storeCategories', JSON.stringify(categories));
 }
 
+/**
+ * Lower values of certain category ids
+ * @param {*} removedId Id of removed category
+ */
 function lowerCategoryIds(removedId) {
     var categories = JSON.parse(localStorage.getItem("storeCategories"))
     for (var i = 0; i < categories.length; i++) {
@@ -255,6 +309,10 @@ function lowerCategoryIds(removedId) {
     localStorage.setItem('storeCategories', JSON.stringify(categories)); 
 }
 
+/**
+ * Lower values of certain task category ids
+ * @param {*} removedId Id of removed category
+ */
 function lowerTaskCategoryIds(removedId) {
     var tasks = JSON.parse(localStorage.getItem("storeTasks"))
     for (var i = 0; i < tasks.length; i++) {
@@ -265,24 +323,37 @@ function lowerTaskCategoryIds(removedId) {
     localStorage.setItem('storeTasks', JSON.stringify(tasks)); 
 }
 
+/**
+ * Get formular for adding tasks based on group column number
+ * @param {*} columnNum group column number
+ */
 function getTaskForm(columnNum) {
     var groupEl = document.getElementsByClassName("group")[columnNum];
     var taskFormEl = groupEl.getElementsByClassName("task-add-form")[0].getElementsByTagName("form")[0];
     return taskFormEl;
 }
 
+/**
+ * Close formular for adding groups
+ */
 function closeGroupAddForm() {
     var groupFormEl = event.target.parentElement.parentElement;
     var groupAddEl = document.getElementById("group-add-new");
     replace(groupFormEl, groupAddEl);
 }
 
+/**
+ * Close formular for adding tasks
+ */
 function closeTaskAddForm() {
     var taskFormEl = findAncestorWithClass(event.target, "task-add-form");
     var taskAddEl = taskFormEl.parentElement.getElementsByClassName("task-add-new")[0];
     replace(taskFormEl, taskAddEl);
 }
 
+/**
+ * Remove category, if non-empty, ask for confirmation
+ */
 function removeGroupClick() {
     var groupEl = findAncestorWithClass(event.target, "group");
     var categoryName = groupEl.getElementsByTagName("h2")[0].innerHTML;
@@ -324,6 +395,9 @@ function removeGroupClick() {
     displayTasks();
 }
 
+/**
+ * Upon double click, opens dialog displaying detailed info + editing
+ */
 function taskDoubleClick() {
     // First, get task and category from local storage
     var groupEl = findAncestorWithClass(event.target, "group");
@@ -342,6 +416,10 @@ function taskDoubleClick() {
     displayDialog(taskObj, categoryObj);
 }
 
+/**
+ * Update task
+ * @param {object} taskNew Updated task object
+ */
 function updateTask(taskNew) {
     var tasks = JSON.parse(localStorage.getItem("storeTasks"));
     for (var i = 0; i < tasks.length; i++) {
@@ -363,6 +441,9 @@ function updateTask(taskNew) {
     console.log("Task updated")
 }
 
+/**
+ * Reset elapsed time, update task, redraw
+ */
 function resetTimeClick() {
     console.log("Refresh time clicked.");
 
@@ -377,6 +458,9 @@ function resetTimeClick() {
     displayTasks();
 }
 
+/**
+ * Save changes made in task editing dialog
+ */
 function dialogSaveSubmit() {
     var task = JSON.parse(localStorage.getItem("storeClickedTask"));
 
@@ -395,6 +479,9 @@ function dialogSaveSubmit() {
     
 }
 
+/**
+ * Delete task, asks confirmation first
+ */
 function deleteTaskClick() {
     var r = confirm("Are you sure you want to delete this task?");
     if (r == true) {
@@ -409,6 +496,9 @@ function deleteTaskClick() {
     }
 }
 
+/**
+ * Every second update elapsed time
+ */
 function updateElapsedTime() {
     var tasks = JSON.parse(localStorage.getItem("storeTasks"));
     //var needsRedraw = false;
@@ -427,6 +517,9 @@ function updateElapsedTime() {
 }
 
 // Displaying model
+/**
+ * Display html code for categories
+ */
 function displayCategories() {
     var categories = JSON.parse(localStorage.getItem('storeCategories'));
     var htmlOutput = "";
@@ -457,6 +550,9 @@ function displayCategories() {
     document.getElementsByClassName("row")[0].innerHTML= htmlOutput;
 }
 
+/**
+ * Display html code for tasks
+ */
 function displayTasks() {
     var categoryElements = document.getElementsByClassName("group");
     // Clear all tasks already displayed first
@@ -545,6 +641,11 @@ function displayTasks() {
     }
 }
 
+/**
+ * Display dialog to see task details
+ * @param {object} taskObj Task object which will be viewed
+ * @param {object} categoryObj Category object to which task belongs to
+ */
 function displayDialog(taskObj, categoryObj) {
     // Priority display preparation
     var noneChecked = "", lowChecked = "", mediumChecked = "", highChecked = "";
@@ -586,41 +687,61 @@ function displayDialog(taskObj, categoryObj) {
     modal.style.display = "block";
 }
 
+/**
+ * Close dialog with task details
+ */
 function closeModal() {
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
 }
 
 // Login page functions
+/**
+ * Redirect to page with tasks
+ */
 function redirect() {
     window.location.replace("tasks.html");
     return false;
 }
 
+/**
+ * Hide login form, show register form
+ */
 function createAccountClick() {
     document.getElementsByClassName("register-form")[0].style.display = "block";
     document.getElementsByClassName("login-form")[0].style.display = "none";
 }
 
+/**
+ * Hide register form, show login form
+ */
 function signInClick() {
     document.getElementsByClassName("register-form")[0].style.display = "none";
     document.getElementsByClassName("login-form")[0].style.display = "block";
 }
 
 // Stats page functions
-
+/**
+ * Show content with general statistics, hide others
+ */
 function generalStatsClick() {
     document.getElementsByClassName("general-content")[0].style.display = "inline-block";
     document.getElementsByClassName("graphs-content")[0].style.display = "none";
     document.getElementsByClassName("tarification-content")[0].style.display = "none";
 }
 
+/**
+ * Show content with graphs, hide others
+ */
 function graphsStatsClick() {
     document.getElementsByClassName("general-content")[0].style.display = "none";
     document.getElementsByClassName("graphs-content")[0].style.display = "inline-block";
     document.getElementsByClassName("tarification-content")[0].style.display = "none";
 }
 
+/**
+ * Show content with tarification statistics, hide others
+ */
 function tarificationStatsClick() {
     document.getElementsByClassName("general-content")[0].style.display = "none";
     document.getElementsByClassName("graphs-content")[0].style.display = "none";
@@ -628,25 +749,49 @@ function tarificationStatsClick() {
 }
 
 // Helpful functions
+/**
+ * Replace elements (hides one, shows other)
+ * @param {*} hide Element to hide
+ * @param {*} show Element to show
+ */
 function replace(hide, show) {
     hide.style.display="none";
     show.style.display="block";
 }
 
+/**
+ * Change visibility of element to value
+ * @param {*} element Element to change
+ * @param {*} visibility Visibility value
+ */
 function changeVisibility(element, visibility) {
     element.style.display = visibility;
 }
 
+/**
+ * Find first ancestor of element with class  
+ * @param {*} el Starting element
+ * @param {*} sel Class name to find
+ */
 function findAncestorWithClass(el, sel) {
     while ((el = el.parentElement) && !(el.className == sel));
     return el;
 }
 
+/**
+ * Remove object from array
+ * @param {*} array Array of objects
+ * @param {*} element Object to remove
+ */
 function remove(array, element) {
     const index = array.indexOf(element);
     array.splice(index, 1);
 }
 
+/**
+ * Get time in format HH:MM:SS
+ * @param {number} seconds Number of seconds
+ */
 function secondsToTimeFormat(seconds) {
     var hours   = Math.floor(seconds / 3600);
     var minutes = Math.floor((seconds - (hours * 3600)) / 60);
@@ -661,6 +806,10 @@ function secondsToTimeFormat(seconds) {
     return hours + ':' + minutes + ':'+ seconds;
 }
 
+/**
+ * Check if due date is today
+ * @param {*} date Due date
+ */
 function isDueToday(date) {
     var now = moment();
     var due = moment(date);
@@ -672,6 +821,10 @@ function isDueToday(date) {
         return false;
 }
 
+/**
+ * Check if due date already past
+ * @param {*} date Due date
+ */
 function isPastDue(date) {
     var now = moment();
     var due = moment(date);
