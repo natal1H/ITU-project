@@ -433,6 +433,10 @@ function displayTasks() {
         else if (task.priority == "low") priorityColor = 'style="background-color:#ccffcc"';
         else if (task.priority == "medium") priorityColor = 'style="background-color:#ffffcc"';
         else if (task.priority == "high") priorityColor = 'style="background-color:#ff9999"';
+        // Due color
+        var dueColor = "";
+        if (isDueToday(task.due) || isPastDue(task.due))
+            dueColor = "style='color:red'";
 
         allTasksDiv.innerHTML += `
         <div class="task" ${priorityColor} ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
@@ -444,7 +448,7 @@ function displayTasks() {
 
           <p class="elapsed-time">Time elapsed: ${secondsToTimeFormat(task.timeElapsed)}</p>
           <p class="check-due">
-          </span><span class="due-date">Due: ${dueDate}</span>
+          </span><span class="due-date" ${dueColor}>Due: ${dueDate}</span>
           <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
           </p>
         </div>
@@ -573,4 +577,26 @@ function secondsToTimeFormat(seconds) {
     if (seconds < 10) 
         seconds = "0" + seconds;
     return hours + ':' + minutes + ':'+ seconds;
+}
+
+function isDueToday(date) {
+    var now = moment();
+    var due = moment(date);
+
+    if (now == due)
+        // Is due today
+        return true;
+    else 
+        return false;
+}
+
+function isPastDue(date) {
+    var now = moment();
+    var due = moment(date);
+
+    if (now > due)
+        // It past due
+        return true;
+    else
+        return false;
 }
