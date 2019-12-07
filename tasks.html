@@ -25,6 +25,15 @@
         </div>
       </div>
     </div>
+    <!-- Search bar -->
+    <div class="search-header">
+      <div class="search-bar">
+        <form name="search-form">
+          <input type="text" placeholder="Search.." name="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+    </div>
 
     <div class='content-wrapper'>      
       <div class="row">
@@ -60,6 +69,8 @@
           }
         }
       }
+
+      setInterval(updateElapsedTime, 1000);
     </script>
   </body>
 </html>

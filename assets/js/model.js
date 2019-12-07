@@ -24,7 +24,7 @@ var tasks = [
         timeElapsed: 0,
         timeEstimated: 3, // h
         due: new Date(Date.UTC(2019, 12, 8)),
-        priority: "no-priority",
+        priority: "high",
         tarification: 0.0,
         status: "paused",
         finished: undefined,
@@ -41,3 +41,4 @@ if (localStorage.getItem("storeDone") === null)
     localStorage.setItem('storeDone', JSON.stringify(done));
 if (localStorage.getItem("storeUser") === null)
     localStorage.setItem('storeUser', JSON.stringify(user));
+    
