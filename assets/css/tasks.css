@@ -272,24 +272,6 @@ h3 {
   margin: 20px 5px 20px 10px;
 }
 
-/*
-.task-priority-none {
-  background-color: #ebecf0;
-}
-
-.task-priority-low {
-  background-color: greenyellow;
-}
-
-.task-priority-medium {
-  background-color: yellow;
-}
-
-.task-priority-high {
-  background-color: red;
-}
-*/
-
 .footer {
   position: fixed;
   left: 0;

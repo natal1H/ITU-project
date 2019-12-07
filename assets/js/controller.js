@@ -367,7 +367,17 @@ function dialogSaveSubmit() {
 
     // Update task
     updateTask(task);
+}
 
+function deleteTaskClick() {
+    var task = JSON.parse(localStorage.getItem("storeClickedTask"));
+    // Remove this task
+    removeTask(task);
+    // Close modal dialog
+    closeModal();
+    // Redraw screen
+    displayCategories();
+    displayTasks();
 }
 
 // Displaying model
@@ -510,6 +520,7 @@ function displayDialog(taskObj, categoryObj) {
       <button type="button" onclick="resetTimeClick()">Reset time</button><br><br>
 
       <input type="submit" value="Save changes">
+      <i class="fa fa-trash" style="float:right;margin:5px 30px 0 0;" onclick="deleteTaskClick()"></i>
     </form>
     `
 
