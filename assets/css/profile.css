@@ -9,19 +9,25 @@
 body {
   background-color: #f1f1f1;
 }
-
 h1 {
-  font-size: 2em;
+  text-align: center;
+
+  color: #444444;
 }
 
-h2 {
-  font-size: 1.5em;
+p {
+  text-align: center;
 }
 
-h3 {
-  font-size: 1.17em;
+.edit{
+  text-align: center;
+  margin: auto;
 }
 
+.notifications{
+  text-align: center;
+  margin: auto;
+}
 /* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
@@ -87,25 +93,4 @@ h3 {
 .footer a {
   color: black;
   text-decoration: none;
-}
-
-.side-menu ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
-}
-  
-.side-menu li a {
-  display: block;
-  color: #000;
-  padding: 8px 16px;
-  text-decoration: none;
-}
- 
-/* Change the link color on hover */
-.side-menu li a:hover {
-  background-color: #555;
-  color: white;
 }
