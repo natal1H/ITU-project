@@ -411,19 +411,19 @@ function deleteTaskClick() {
 
 function updateElapsedTime() {
     var tasks = JSON.parse(localStorage.getItem("storeTasks"));
-    var needsRedraw = false;
+    //var needsRedraw = false;
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].status == "active") {
             tasks[i].timeElapsed++;
-            needsRedraw = true;
+            //needsRedraw = true;
         }
     }
     localStorage.setItem('storeTasks', JSON.stringify(tasks));
 
-    if (needsRedraw) {
-        displayCategories();
-        displayTasks();
-    }
+    //if (needsRedraw) {
+    //    displayCategories();
+    //    displayTasks();
+    //}
 }
 
 // Displaying model
@@ -595,6 +595,36 @@ function closeModal() {
 function redirect() {
     window.location.replace("tasks.html");
     return false;
+}
+
+function createAccountClick() {
+    document.getElementsByClassName("register-form")[0].style.display = "block";
+    document.getElementsByClassName("login-form")[0].style.display = "none";
+}
+
+function signInClick() {
+    document.getElementsByClassName("register-form")[0].style.display = "none";
+    document.getElementsByClassName("login-form")[0].style.display = "block";
+}
+
+// Stats page functions
+
+function generalStatsClick() {
+    document.getElementsByClassName("general-content")[0].style.display = "inline-block";
+    document.getElementsByClassName("graphs-content")[0].style.display = "none";
+    document.getElementsByClassName("tarification-content")[0].style.display = "none";
+}
+
+function graphsStatsClick() {
+    document.getElementsByClassName("general-content")[0].style.display = "none";
+    document.getElementsByClassName("graphs-content")[0].style.display = "inline-block";
+    document.getElementsByClassName("tarification-content")[0].style.display = "none";
+}
+
+function tarificationStatsClick() {
+    document.getElementsByClassName("general-content")[0].style.display = "none";
+    document.getElementsByClassName("graphs-content")[0].style.display = "none";
+    document.getElementsByClassName("tarification-content")[0].style.display = "inline-block";
 }
 
 // Helpful functions
