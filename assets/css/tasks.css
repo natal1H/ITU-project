@@ -152,7 +152,14 @@ h3 {
 }
 
 /* Single task block */
-.task, .task-add-new, .task-add-form {
+.task {
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  color: #2a2a2a;
+}
+
+.task-add-new, .task-add-form {
   background-color: #ebecf0;
   padding: 5px;
   margin-bottom: 10px;
@@ -264,6 +271,24 @@ h3 {
   float: right;
   margin: 20px 5px 20px 10px;
 }
+
+/*
+.task-priority-none {
+  background-color: #ebecf0;
+}
+
+.task-priority-low {
+  background-color: greenyellow;
+}
+
+.task-priority-medium {
+  background-color: yellow;
+}
+
+.task-priority-high {
+  background-color: red;
+}
+*/
 
 .footer {
   position: fixed;

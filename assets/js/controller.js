@@ -400,9 +400,15 @@ function displayTasks() {
             dueDate = "";
         else
             dueDate = moment(task.due).format("D.M.YYYY");
+        // priority
+        var priorityColor;
+        if (task.priority == "no-priority") priorityColor = 'style="background-color:#ebecf0"';
+        else if (task.priority == "low") priorityColor = 'style="background-color:#ccffcc"';
+        else if (task.priority == "medium") priorityColor = 'style="background-color:#ffffcc"';
+        else if (task.priority == "high") priorityColor = 'style="background-color:#ff9999"';
 
         allTasksDiv.innerHTML += `
-        <div class="task" ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
+        <div class="task" ${priorityColor} ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
           <div class="task-header">
             <h3>${task.name}</h3>
             <i class="fa fa-play" onclick="playIconClicked()"></i>
@@ -438,6 +444,7 @@ function displayTasks() {
               Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
               Priority:
               <ul class="radion-buttons">
+                <li><input type="radio" class="task-none" name="task-priority" value="no-priority"> None</li>
                 <li><input type="radio" class="task-low" name="task-priority" value="low"> Low</li>
                 <li><input type="radio" class="task-medium" name="task-priority" value="medium"> Medium</li>
                 <li><input type="radio" class="task-high" name="task-priority" value="high"> High</li>
@@ -456,6 +463,13 @@ function displayTasks() {
 }
 
 function displayDialog(taskObj, categoryObj) {
+    // Priority display preparation
+    var noneChecked = "", lowChecked = "", mediumChecked = "", highChecked = "";
+    if (taskObj.priority == "no-priority") noneChecked = "checked";
+    if (taskObj.priority == "low") lowChecked = "checked";
+    if (taskObj.priority == "medium") mediumChecked = "checked";
+    if (taskObj.priority == "high") highChecked = "checked";
+
     document.getElementById("myModal").getElementsByClassName("modal-body")[0].innerHTML = `
     <form name="dialog-form">
       <p style="margin:5px 0 3px 0">Name:</p>
@@ -471,9 +485,10 @@ function displayDialog(taskObj, categoryObj) {
       <input type="number" step="0.01" value="${taskObj.tarification}"><br>
       <p style="margin:3px 0 3px 0">Priority:</p>
       <ul class="radion-buttons">
-        <li><input type="radio" value="low"> Low</li>
-        <li><input type="radio" value="medium"> Medium</li>
-        <li><input type="radio" value="high"> High</li>
+        <li><input type="radio" value="no-prioriy" ${noneChecked}> None</li>
+        <li><input type="radio" value="low" ${lowChecked}> Low</li>
+        <li><input type="radio" value="medium" ${mediumChecked}> Medium</li>
+        <li><input type="radio" value="high" ${highChecked}> High</li>
       </ul>
       <button type="button" onclick="resetTimeClick()">Reset time</button><br><br>
 
