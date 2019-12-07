@@ -371,8 +371,10 @@ function resetTimeClick() {
     task.timeElapsed = 0;
     updateTask(task);
 
-    // Redraw elapsed time
+    // Redraw
     document.getElementById("elapsed-p").innerHTML = "Elapsed time: " + secondsToTimeFormat(task.timeElapsed);
+    displayCategories();
+    displayTasks();
 }
 
 function dialogSaveSubmit() {
@@ -389,6 +391,8 @@ function dialogSaveSubmit() {
 
     // Update task
     updateTask(task);
+
+    
 }
 
 function deleteTaskClick() {
@@ -407,14 +411,19 @@ function deleteTaskClick() {
 
 function updateElapsedTime() {
     var tasks = JSON.parse(localStorage.getItem("storeTasks"));
+    var needsRedraw = false;
     for (var i = 0; i < tasks.length; i++) {
-        if (tasks[i].status == "active")
+        if (tasks[i].status == "active") {
             tasks[i].timeElapsed++;
+            needsRedraw = true;
+        }
     }
     localStorage.setItem('storeTasks', JSON.stringify(tasks));
 
-    displayCategories();
-    displayTasks();
+    if (needsRedraw) {
+        displayCategories();
+        displayTasks();
+    }
 }
 
 // Displaying model

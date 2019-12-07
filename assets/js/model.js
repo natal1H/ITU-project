@@ -8,7 +8,7 @@ var tasks = [
         name: "Buy train ticket",
         category: 0,
         description: "Buy train ticket to go home",
-        timeElapsed: 5,
+        timeElapsed: 0,
         timeEstimated: 1, // h
         due: new Date(Date.UTC(2019, 12, 24)),
         priority: "no-priority",
