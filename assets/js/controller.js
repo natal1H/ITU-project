@@ -138,15 +138,13 @@ function taskAddNewSubmit() {
     var taskForm = getTaskForm(taskCategory);
 
     //var taskName = document.forms["task-form"]["task-name"].value;
-    var taskName = taskForm.getElementsByClassName("task-name")[0].value;   
+    var taskName = taskForm["task-name"].value;   
     
-    var taskDue = taskForm.getElementsByClassName("task-due")[0].value;
-    var taskEstimatedTime = taskForm.getElementsByClassName("estimated-time").value;
-    var taskTarification = taskForm.getElementsByClassName("tarification").value;
+    var taskDue = taskForm["task-due"].value;
+    var taskEstimatedTime = taskForm["task-estimated-time"].value;
+    var taskTarification = taskForm["task-tarification"].value;
     var taskDescription = event.target.getElementsByClassName("task-optional")[0].getElementsByClassName("task-description")[0].value;
-    
-    // Priority - TODO
-    //var taskPriority = document.forms["task-form"]["task-priority"].value;
+    var taskPriority = taskForm["task-priority"].value;
 
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
 
@@ -157,8 +155,8 @@ function taskAddNewSubmit() {
         description: taskDescription,
         timeElapsed: 0,
         timeEstimated: taskEstimatedTime, // h
-        due: "",
-        priority: "no-priority", // TODO - temp
+        due: taskDue,
+        priority: taskPriority,
         tarification: taskTarification,
         status: "paused",
     };
