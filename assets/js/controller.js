@@ -51,12 +51,32 @@ function playIconClicked() {
     var playIcon = event.target;
     var pauseIcon = playIcon.parentElement.getElementsByClassName('fa fa-pause')[0];
     replace(playIcon, pauseIcon);
+
+    // Change task status to "active"
+    var taskEl = findAncestorWithClass(event.target, "task");
+    var categoryEl = findAncestorWithClass(event.target, "group");
+    var categoryId = getCategoryId(categoryEl);
+    var taskObj = getTask(taskEl, categoryId);
+    taskObj.status = "active";
+
+    // Update task
+    updateTask(taskObj);
 }
 
 function pauseIconClicked() {
     var pauseIcon = event.target;
     var playIcon = pauseIcon.parentElement.getElementsByClassName('fa fa-play')[0];
     replace(pauseIcon, playIcon);
+
+    // Change task status to "paused"
+    var taskEl = findAncestorWithClass(event.target, "task");
+    var categoryEl = findAncestorWithClass(event.target, "group");
+    var categoryId = getCategoryId(categoryEl);
+    var taskObj = getTask(taskEl, categoryId);
+    taskObj.status = "paused";
+
+    // Update task
+    updateTask(taskObj);
 }
 
 function checkIconClicked() {
@@ -138,15 +158,13 @@ function taskAddNewSubmit() {
     var taskForm = getTaskForm(taskCategory);
 
     //var taskName = document.forms["task-form"]["task-name"].value;
-    var taskName = taskForm.getElementsByClassName("task-name")[0].value;   
+    var taskName = taskForm["task-name"].value;   
     
-    var taskDue = taskForm.getElementsByClassName("task-due")[0].value;
-    var taskEstimatedTime = taskForm.getElementsByClassName("estimated-time").value;
-    var taskTarification = taskForm.getElementsByClassName("tarification").value;
+    var taskDue = taskForm["task-due"].value;
+    var taskEstimatedTime = taskForm["task-estimated-time"].value;
+    var taskTarification = taskForm["task-tarification"].value;
     var taskDescription = event.target.getElementsByClassName("task-optional")[0].getElementsByClassName("task-description")[0].value;
-    
-    // Priority - TODO
-    //var taskPriority = document.forms["task-form"]["task-priority"].value;
+    var taskPriority = taskForm["task-priority"].value;
 
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
 
@@ -157,8 +175,8 @@ function taskAddNewSubmit() {
         description: taskDescription,
         timeElapsed: 0,
         timeEstimated: taskEstimatedTime, // h
-        due: "",
-        priority: "no-priority", // TODO - temp
+        due: taskDue,
+        priority: taskPriority,
         tarification: taskTarification,
         status: "paused",
     };
@@ -192,7 +210,9 @@ function getCategoryId(groupEl) {
 
 function getTask(taskEl, taskCategory) {
     var heading = taskEl.getElementsByTagName("h3")[0].innerHTML;
+    console.log(heading);
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
+    console.log(tasks);
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].name == heading && tasks[i].category == taskCategory) {
             return tasks[i];
@@ -312,7 +332,98 @@ function taskDoubleClick() {
     var taskObj = getTask(taskEl, categoryId);
     var categoryObj = getCategory(categoryId);
 
+    console.log(taskObj);
+    console.log(categoryObj);
+    localStorage.setItem('storeClickedTask', JSON.stringify(taskObj));
+    localStorage.setItem('storeClickedCategory', JSON.stringify(categoryObj));
+    console.log(JSON.parse(localStorage.getItem("storeClickedTask")));
+    console.log(JSON.parse(localStorage.getItem("storeClickedCategory")));
+
     displayDialog(taskObj, categoryObj);
+}
+
+function updateTask(taskNew) {
+    var tasks = JSON.parse(localStorage.getItem("storeTasks"));
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id == taskNew.id) {
+            // Update this task
+            tasks[i].name = taskNew.name;
+            tasks[i].category = taskNew.category;
+            tasks[i].description = taskNew.description;
+            tasks[i].timeElapsed = taskNew.timeElapsed;
+            tasks[i].timeEstimated = taskNew.timeEstimated;
+            tasks[i].due = taskNew.due;
+            tasks[i].priority = taskNew.priority;
+            tasks[i].tarification = taskNew.tarification;
+            tasks[i].status = taskNew.status;
+            tasks[i].finished = taskNew.finished;
+        }
+    }
+    localStorage.setItem('storeTasks', JSON.stringify(tasks));    
+    console.log("Task updated")
+}
+
+function resetTimeClick() {
+    console.log("Refresh time clicked.");
+
+    // Get clicked task
+    var task = JSON.parse(localStorage.getItem("storeClickedTask"));
+    task.timeElapsed = 0;
+    updateTask(task);
+
+    // Redraw
+    document.getElementById("elapsed-p").innerHTML = "Elapsed time: " + secondsToTimeFormat(task.timeElapsed);
+    displayCategories();
+    displayTasks();
+}
+
+function dialogSaveSubmit() {
+    var task = JSON.parse(localStorage.getItem("storeClickedTask"));
+
+    // Get all the input from dialog
+    var dialogForm = document.forms["dialog-form"];
+    task.name = dialogForm["dialog-name"].value;
+    task.description = dialogForm.getElementsByTagName("textarea")[0].innerHTML;
+    task.due = dialogForm["dialog-due"].value;
+    task.timeEstimated = dialogForm["dialog-time-estimated"].value;
+    task.tarification = dialogForm["dialog-tarification"].value;
+    task.priority = dialogForm["dialog-priority"].value;
+
+    // Update task
+    updateTask(task);
+
+    
+}
+
+function deleteTaskClick() {
+    var r = confirm("Are you sure you want to delete this task?");
+    if (r == true) {
+        var task = JSON.parse(localStorage.getItem("storeClickedTask"));
+        // Remove this task
+        removeTask(task);
+        // Close modal dialog
+        closeModal();
+        // Redraw screen
+        displayCategories();
+        displayTasks();
+    }
+}
+
+function updateElapsedTime() {
+    var tasks = JSON.parse(localStorage.getItem("storeTasks"));
+    //var needsRedraw = false;
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].status == "active") {
+            tasks[i].timeElapsed++;
+            //needsRedraw = true;
+        }
+    }
+    localStorage.setItem('storeTasks', JSON.stringify(tasks));
+
+    //if (needsRedraw) {
+    //    displayCategories();
+    //    displayTasks();
+    //}
 }
 
 // Displaying model
@@ -324,7 +435,7 @@ function displayCategories() {
         <div class="group">
           <span><h2>${categories[i].name}</h2>
 
-          <i class="fa fa-close group-remove" onclick="removeGroupClick()"></i></span>
+          <i title="Delete" class="fa fa-close group-remove" onclick="removeGroupClick()"></i></span>
 
           <div class="all-tasks"></div>
         </div>
@@ -362,19 +473,35 @@ function displayTasks() {
             dueDate = "";
         else
             dueDate = moment(task.due).format("D.M.YYYY");
+        // priority
+        var priorityColor;
+        if (task.priority == "no-priority") priorityColor = 'style="background-color:#ebecf0"';
+        else if (task.priority == "low") priorityColor = 'style="background-color:#ccffcc"';
+        else if (task.priority == "medium") priorityColor = 'style="background-color:#ffffcc"';
+        else if (task.priority == "high") priorityColor = 'style="background-color:#ff9999"';
+        // Due color
+        var dueColor = "";
+        if (isDueToday(task.due) || isPastDue(task.due))
+            dueColor = "style='color:red'";
+        // Status
+        var playDisplay = "", pauseDisplay = "";
+        if (task.status == "active")
+            playDisplay = "style='display:none'";
+        else if (task.status == "paused")
+            pauseDisplay = "style='display:none'";
 
         allTasksDiv.innerHTML += `
-        <div class="task" ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
+        <div class="task" ${priorityColor} ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
           <div class="task-header">
             <h3>${task.name}</h3>
-            <i class="fa fa-play" onclick="playIconClicked()"></i>
-            <i class="fa fa-pause" style="display:none" onclick="pauseIconClicked()"></i>
+            <i title="Start timer" class="fa fa-play" ${playDisplay} onclick="playIconClicked()"></i>
+            <i title="Pause" class="fa fa-pause" ${pauseDisplay} onclick="pauseIconClicked()"></i>
           </div>
 
-          <p class="elapsed-time">Time elapsed: ${task.timeElapsed}</p>
+          <p class="elapsed-time">Time elapsed: ${secondsToTimeFormat(task.timeElapsed)}</p>
           <p class="check-due">
-          </span><span class="due-date">Due: ${dueDate}</span>
-          <span class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
+          </span><span class="due-date" ${dueColor}>Due: ${dueDate}</span>
+          <span title="Done" class="fa fa-check" style="display:none;float:right" onclick="checkIconClicked()"></span>
           </p>
         </div>
         `;
@@ -400,6 +527,7 @@ function displayTasks() {
               Tarification: <input type="number" class="tarification" name="task-tarification" step="0.01"><br>
               Priority:
               <ul class="radion-buttons">
+                <li><input type="radio" class="task-none" name="task-priority" value="no-priority"> None</li>
                 <li><input type="radio" class="task-low" name="task-priority" value="low"> Low</li>
                 <li><input type="radio" class="task-medium" name="task-priority" value="medium"> Medium</li>
                 <li><input type="radio" class="task-high" name="task-priority" value="high"> High</li>
@@ -418,28 +546,37 @@ function displayTasks() {
 }
 
 function displayDialog(taskObj, categoryObj) {
+    // Priority display preparation
+    var noneChecked = "", lowChecked = "", mediumChecked = "", highChecked = "";
+    if (taskObj.priority == "no-priority") noneChecked = "checked";
+    if (taskObj.priority == "low") lowChecked = "checked";
+    if (taskObj.priority == "medium") mediumChecked = "checked";
+    if (taskObj.priority == "high") highChecked = "checked";
+
     document.getElementById("myModal").getElementsByClassName("modal-body")[0].innerHTML = `
-    <form name="dialog-form">
+    <form name="dialog-form" onsubmit="dialogSaveSubmit()">
       <p style="margin:5px 0 3px 0">Name:</p>
-      <input type="text" value="${taskObj.name}"><br>
+      <input name="dialog-name" type="text" value="${taskObj.name}"><br>
       <p style="margin:3px 0 3px 0">Description:</p>
       <textarea>${taskObj.description}</textarea><br>
       <p style="margin:0px 0 3px 0">Due:</p>
-      <input type="date" value="${moment(taskObj.due).format("YYYY-MM-DD")}"><br>
+      <input name="dialog-due" type="date" value="${moment(taskObj.due).format("YYYY-MM-DD")}"><br>
       <p style="margin:3px 0 3px 0">Estimated time:</p>
-      <input type="number" value="${taskObj.timeEstimated}"><br>
-      <p style="margin:3px 0 3px 0">Elapsed time: ${taskObj.timeElapsed}</p> 
+      <input name="dialog-time-estimated" type="number" value="${taskObj.timeEstimated}"><br>
+      <p id="elapsed-p" style="margin:3px 0 3px 0">Elapsed time: ${secondsToTimeFormat(taskObj.timeElapsed)}</p> 
       <p style="margin:3px 0 3px 0">Tarification:</p>
-      <input type="number" step="0.01" value="${taskObj.tarification}"><br>
+      <input name="dialog-tarification" type="number" step="0.01" value="${taskObj.tarification}"><br>
       <p style="margin:3px 0 3px 0">Priority:</p>
       <ul class="radion-buttons">
-        <li><input type="radio" value="low"> Low</li>
-        <li><input type="radio" value="medium"> Medium</li>
-        <li><input type="radio" value="high"> High</li>
+        <li><input name="dialog-priority" type="radio" value="no-prioriy" ${noneChecked}> None</li>
+        <li><input name="dialog-priority" type="radio" value="low" ${lowChecked}> Low</li>
+        <li><input name="dialog-priority" type="radio" value="medium" ${mediumChecked}> Medium</li>
+        <li><input name="dialog-priority" type="radio" value="high" ${highChecked}> High</li>
       </ul>
-      <button>Reset time</button><br><br>
+      <button type="button" onclick="resetTimeClick()">Reset time</button><br><br>
 
       <input type="submit" value="Save changes">
+      <i title="Delete" class="fa fa-trash" style="float:right;margin:5px 30px 0 0;" onclick="deleteTaskClick()"></i>
     </form>
     `
 
@@ -458,7 +595,37 @@ function closeModal() {
 function redirect() {
     window.location.replace("tasks.html");
     return false;
-  }
+}
+
+function createAccountClick() {
+    document.getElementsByClassName("register-form")[0].style.display = "block";
+    document.getElementsByClassName("login-form")[0].style.display = "none";
+}
+
+function signInClick() {
+    document.getElementsByClassName("register-form")[0].style.display = "none";
+    document.getElementsByClassName("login-form")[0].style.display = "block";
+}
+
+// Stats page functions
+
+function generalStatsClick() {
+    document.getElementsByClassName("general-content")[0].style.display = "inline-block";
+    document.getElementsByClassName("graphs-content")[0].style.display = "none";
+    document.getElementsByClassName("tarification-content")[0].style.display = "none";
+}
+
+function graphsStatsClick() {
+    document.getElementsByClassName("general-content")[0].style.display = "none";
+    document.getElementsByClassName("graphs-content")[0].style.display = "inline-block";
+    document.getElementsByClassName("tarification-content")[0].style.display = "none";
+}
+
+function tarificationStatsClick() {
+    document.getElementsByClassName("general-content")[0].style.display = "none";
+    document.getElementsByClassName("graphs-content")[0].style.display = "none";
+    document.getElementsByClassName("tarification-content")[0].style.display = "inline-block";
+}
 
 // Helpful functions
 function replace(hide, show) {
@@ -478,4 +645,40 @@ function findAncestorWithClass(el, sel) {
 function remove(array, element) {
     const index = array.indexOf(element);
     array.splice(index, 1);
+}
+
+function secondsToTimeFormat(seconds) {
+    var hours   = Math.floor(seconds / 3600);
+    var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+    var seconds = seconds - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) 
+        hours   = "0" + hours;
+    if (minutes < 10) 
+        minutes = "0" + minutes;
+    if (seconds < 10) 
+        seconds = "0" + seconds;
+    return hours + ':' + minutes + ':'+ seconds;
+}
+
+function isDueToday(date) {
+    var now = moment();
+    var due = moment(date);
+
+    if (now == due)
+        // Is due today
+        return true;
+    else 
+        return false;
+}
+
+function isPastDue(date) {
+    var now = moment();
+    var due = moment(date);
+
+    if (now > due)
+        // It past due
+        return true;
+    else
+        return false;
 }
