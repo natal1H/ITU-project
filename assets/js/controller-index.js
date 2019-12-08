@@ -1,3 +1,8 @@
+/**
+ * ITU project 
+ * Author: Natália Holková (xholko02)
+ */
+
 // Login page functions
 /**
  * Redirect to page with tasks

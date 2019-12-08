@@ -1,3 +1,8 @@
+/**
+ * ITU project 
+ * Author: Matej Novák (xnovak2f)
+ */
+
 // Stats page functions
 /**
  * Show content with general statistics, hide others

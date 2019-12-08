@@ -1,4 +1,9 @@
 /**
+ * ITU project 
+ * Author: Natália Holková (xholko02)
+ */
+
+/**
  * Hide button "Add group" and unhide form to for adding groups
  */
 function groupAddNewClick() {   
