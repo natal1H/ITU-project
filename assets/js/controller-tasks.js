@@ -503,32 +503,21 @@ function updateElapsedTime() {
 // Displaying model
 
 function displayElapsedTime() {
-    console.log("Display elapsed time");
     var categoriesArr = JSON.parse(localStorage.getItem("storeCategories"));
     var tasksArr = JSON.parse(localStorage.getItem("storeTasks"));
 
     // All group columns
     var groupElements = document.getElementsByClassName("group");
-    console.log(groupElements);
 
     for (var i = 0; i < tasksArr.length; i++) {
-        console.log("Updating task");
-        console.log(tasksArr[i]);
-
         var taskObj = tasksArr[i];
         var groupEl = groupElements[taskObj.category];
         var taskElements = groupEl.getElementsByClassName("task");
-        console.log("Task elements:");
-        console.log(taskElements);
         for (var j = 0; j < taskElements.length; j++) {
-            console.log("Now checking element:");
-            console.log(taskElements[j]);
             var heading = taskElements[j].getElementsByTagName("h3")[0].innerHTML;
-            console.log(heading);
             if (heading == taskObj.name) {
                 // Change elapsed time
                 taskElements[j].getElementsByClassName("elapsed-time")[0].innerHTML = "Time elapsed: " + secondsToTimeFormat(taskObj.timeElapsed);
-                console.log("Changing time");
                 break;
             }
         }
