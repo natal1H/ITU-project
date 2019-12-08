@@ -22,7 +22,7 @@ var tasks = [
         finished: undefined,
     },
     {
-        id: 0,
+        id: 1,
         name: "Buy presents",
         category: 0,
         description: "Buy christmas presents",
@@ -35,7 +35,7 @@ var tasks = [
         finished: undefined,
     },
     {
-        id: 1,
+        id: 2,
         name: "Implement a time tracker",
         category: 1,
         description: "Implement the project for ITU",
@@ -48,7 +48,7 @@ var tasks = [
         finished: undefined,
     },
     {
-        id: 1,
+        id: 3,
         name: "Present the project",
         category: 1,
         description: "Present the project for ITU",
