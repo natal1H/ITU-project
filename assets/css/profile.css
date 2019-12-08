@@ -2,7 +2,7 @@
  * ITU project 
  * Author: Martina Chripková (xchrip01)
  */
- 
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 * {
@@ -43,7 +43,7 @@ p {
 /* Style the header with a grey background and some padding */
 .header {
   position: fixed;
-  width: 100%;
+  width: calc(100% - 10px);
   overflow: hidden;
   background-color: #3c8dbc;
   padding: 5px 5px;
