@@ -592,7 +592,7 @@ function displayTasks() {
             pauseDisplay = "style='display:none'";
 
         allTasksDiv.innerHTML += `
-        <div class="task" ${priorityColor} ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
+        <div class="task" ${priorityColor} ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()" title="Double-click for details">
           <div class="task-header">
             <h3>${task.name}</h3>
             <i title="Start timer" class="fa fa-play" ${playDisplay} onclick="playIconClicked()"></i>
@@ -668,10 +668,10 @@ function displayDialog(taskObj, categoryObj) {
       <p style="margin:0px 0 3px 0">Due:</p>
       <input name="dialog-due" type="date" value="${moment(taskObj.due).format("YYYY-MM-DD")}"><br>
       <p style="margin:3px 0 3px 0">Estimated time:</p>
-      <input name="dialog-time-estimated" type="number" value="${taskObj.timeEstimated}"><br>
+      <input name="dialog-time-estimated" type="number" title="Approximate time to complete in hours" value="${taskObj.timeEstimated}"><br>
       <p id="elapsed-p" style="margin:3px 0 3px 0">Elapsed time: ${secondsToTimeFormat(taskObj.timeElapsed)}</p> 
       <p style="margin:3px 0 3px 0">Tarification:</p>
-      <input name="dialog-tarification" type="number" step="0.01" value="${taskObj.tarification}"><br>
+      <input name="dialog-tarification" type="number" title="Task pricing per hour" step="0.01" value="${taskObj.tarification}"><br>
       <p style="margin:3px 0 3px 0">Priority:</p>
       <ul class="radion-buttons">
         <li><input name="dialog-priority" type="radio" value="no-prioriy" ${noneChecked}> None</li>
@@ -679,7 +679,7 @@ function displayDialog(taskObj, categoryObj) {
         <li><input name="dialog-priority" type="radio" value="medium" ${mediumChecked}> Medium</li>
         <li><input name="dialog-priority" type="radio" value="high" ${highChecked}> High</li>
       </ul>
-      <button type="button" onclick="resetTimeClick()">Reset time</button><br><br>
+      <button type="button" onclick="resetTimeClick()" title="Reset elapsed time">Reset time</button><br><br>
 
       <input type="submit" value="Save changes">
       <i title="Delete" class="fa fa-trash" style="float:right;margin:5px 30px 0 0;" onclick="deleteTaskClick()"></i>
