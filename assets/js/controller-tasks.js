@@ -1,4 +1,9 @@
 /**
+ * ITU project 
+ * Author: Natália Holková (xholko02)
+ */
+
+/**
  * Hide button "Add group" and unhide form to for adding groups
  */
 function groupAddNewClick() {   
@@ -101,22 +106,14 @@ function pauseIconClicked() {
  * After clicking "Done" option, remove task from active ones and redraw page
  */
 function checkIconClicked() {
-    console.log("Check icon clicked.");
     var taskEl = findAncestorWithClass(event.target, "task");
     var groupEl = findAncestorWithClass(taskEl, "group");
     var category = getCategoryId(groupEl);
     var task = getTask(taskEl, category);
 
-    console.log(event.target);
-    console.log("Task to remove:")
-    console.log(task);
-
     // Remove task from task
     removeTask(task);
-
-    console.log("Tasks after removal");
     var tasks = JSON.parse(localStorage.getItem("storeTasks"));
-    console.log(tasks)
 
     // Change task attributes
     task.status = "done";
@@ -252,9 +249,7 @@ function getCategoryId(groupEl) {
  */
 function getTask(taskEl, taskCategory) {
     var heading = taskEl.getElementsByTagName("h3")[0].innerHTML;
-    console.log(heading);
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
-    console.log(tasks);
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].name == heading && tasks[i].category == taskCategory) {
             return tasks[i];
@@ -364,7 +359,6 @@ function removeGroupClick() {
     
     var tasksInCategory = [];
     for (var i = 0; i < tasks.length; i++) {
-        console.log(i);
         if (tasks[i].category == categoryId) {
             tasksInCategory.push(tasks[i]);
         }
@@ -406,12 +400,8 @@ function taskDoubleClick() {
     var taskObj = getTask(taskEl, categoryId);
     var categoryObj = getCategory(categoryId);
 
-    console.log(taskObj);
-    console.log(categoryObj);
     localStorage.setItem('storeClickedTask', JSON.stringify(taskObj));
     localStorage.setItem('storeClickedCategory', JSON.stringify(categoryObj));
-    console.log(JSON.parse(localStorage.getItem("storeClickedTask")));
-    console.log(JSON.parse(localStorage.getItem("storeClickedCategory")));
 
     displayDialog(taskObj, categoryObj);
 }
@@ -438,15 +428,12 @@ function updateTask(taskNew) {
         }
     }
     localStorage.setItem('storeTasks', JSON.stringify(tasks));    
-    console.log("Task updated")
 }
 
 /**
  * Reset elapsed time, update task, redraw
  */
 function resetTimeClick() {
-    console.log("Refresh time clicked.");
-
     // Get clicked task
     var task = JSON.parse(localStorage.getItem("storeClickedTask"));
     task.timeElapsed = 0;
@@ -475,8 +462,6 @@ function dialogSaveSubmit() {
 
     // Update task
     updateTask(task);
-
-    
 }
 
 /**
@@ -501,22 +486,55 @@ function deleteTaskClick() {
  */
 function updateElapsedTime() {
     var tasks = JSON.parse(localStorage.getItem("storeTasks"));
-    //var needsRedraw = false;
+    var needsRedraw = false;
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].status == "active") {
             tasks[i].timeElapsed++;
-            //needsRedraw = true;
+            needsRedraw = true;
         }
     }
     localStorage.setItem('storeTasks', JSON.stringify(tasks));
 
-    //if (needsRedraw) {
-    //    displayCategories();
-    //    displayTasks();
-    //}
+    if (needsRedraw) {
+        displayElapsedTime();
+    }
 }
 
 // Displaying model
+
+function displayElapsedTime() {
+    console.log("Display elapsed time");
+    var categoriesArr = JSON.parse(localStorage.getItem("storeCategories"));
+    var tasksArr = JSON.parse(localStorage.getItem("storeTasks"));
+
+    // All group columns
+    var groupElements = document.getElementsByClassName("group");
+    console.log(groupElements);
+
+    for (var i = 0; i < tasksArr.length; i++) {
+        console.log("Updating task");
+        console.log(tasksArr[i]);
+
+        var taskObj = tasksArr[i];
+        var groupEl = groupElements[taskObj.category];
+        var taskElements = groupEl.getElementsByClassName("task");
+        console.log("Task elements:");
+        console.log(taskElements);
+        for (var j = 0; j < taskElements.length; j++) {
+            console.log("Now checking element:");
+            console.log(taskElements[j]);
+            var heading = taskElements[j].getElementsByTagName("h3")[0].innerHTML;
+            console.log(heading);
+            if (heading == taskObj.name) {
+                // Change elapsed time
+                taskElements[j].getElementsByClassName("elapsed-time")[0].innerHTML = "Time elapsed: " + secondsToTimeFormat(taskObj.timeElapsed);
+                console.log("Changing time");
+                break;
+            }
+        }
+    }
+}
+
 /**
  * Display html code for categories
  */
@@ -587,7 +605,7 @@ function displayTasks() {
             pauseDisplay = "style='display:none'";
 
         allTasksDiv.innerHTML += `
-        <div class="task" ${priorityColor} ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()">
+        <div class="task" ${priorityColor} ondblclick="taskDoubleClick()" onmouseenter="taskMouseEnter()" onmouseleave="taskMouseLeave()" title="Double-click for details">
           <div class="task-header">
             <h3>${task.name}</h3>
             <i title="Start timer" class="fa fa-play" ${playDisplay} onclick="playIconClicked()"></i>
@@ -663,10 +681,10 @@ function displayDialog(taskObj, categoryObj) {
       <p style="margin:0px 0 3px 0">Due:</p>
       <input name="dialog-due" type="date" value="${moment(taskObj.due).format("YYYY-MM-DD")}"><br>
       <p style="margin:3px 0 3px 0">Estimated time:</p>
-      <input name="dialog-time-estimated" type="number" value="${taskObj.timeEstimated}"><br>
+      <input name="dialog-time-estimated" type="number" title="Approximate time to complete in hours" value="${taskObj.timeEstimated}"><br>
       <p id="elapsed-p" style="margin:3px 0 3px 0">Elapsed time: ${secondsToTimeFormat(taskObj.timeElapsed)}</p> 
       <p style="margin:3px 0 3px 0">Tarification:</p>
-      <input name="dialog-tarification" type="number" step="0.01" value="${taskObj.tarification}"><br>
+      <input name="dialog-tarification" type="number" title="Task pricing per hour" step="0.01" value="${taskObj.tarification}"><br>
       <p style="margin:3px 0 3px 0">Priority:</p>
       <ul class="radion-buttons">
         <li><input name="dialog-priority" type="radio" value="no-prioriy" ${noneChecked}> None</li>
@@ -674,7 +692,7 @@ function displayDialog(taskObj, categoryObj) {
         <li><input name="dialog-priority" type="radio" value="medium" ${mediumChecked}> Medium</li>
         <li><input name="dialog-priority" type="radio" value="high" ${highChecked}> High</li>
       </ul>
-      <button type="button" onclick="resetTimeClick()">Reset time</button><br><br>
+      <button type="button" onclick="resetTimeClick()" title="Reset elapsed time">Reset time</button><br><br>
 
       <input type="submit" value="Save changes">
       <i title="Delete" class="fa fa-trash" style="float:right;margin:5px 30px 0 0;" onclick="deleteTaskClick()"></i>

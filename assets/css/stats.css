@@ -1,3 +1,8 @@
+/**
+ * ITU project 
+ * Author: Matej Novák (xnovak2f)
+ */
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 * {
@@ -27,7 +32,7 @@ h3 {
 /* Style the header with a grey background and some padding */
 .header {
   position: fixed;
-  width: 100%;
+  width: calc(100% - 10px);
   overflow: hidden;
   background-color: #3c8dbc;
   padding: 5px 5px;
@@ -128,6 +133,7 @@ h3 {
   margin-left: 160px;
   padding: 10px;
   display: inline-block;
+  /*width: calc(100% - 160px);*/
 }
 
 .content-wrapper h2 {
@@ -152,12 +158,13 @@ h3 {
 }
 
 .from-to-date {
-  position:absolute;
-  top:65px;
-  right: 5px;
+  position: fixed;
+  right: 0px;
+  top: 65px;
 }
 
 .from-to-date form {
   float: right;
   font-weight: bold;
+  padding-right: 5px;
 }

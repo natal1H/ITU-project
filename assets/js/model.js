@@ -1,3 +1,8 @@
+/**
+ * ITU project 
+ * Author: Natália Holková (xholko02)
+ */
+
 var user = {login: "xlogin00", password: "12345", email: "login@mail.com"};
 
 var categories = [{id: 0, name: "Uncategorized"}, {id: 1, name: "School"}];
@@ -10,7 +15,7 @@ var tasks = [
         description: "Buy train ticket to go home",
         timeElapsed: 0,
         timeEstimated: 1, // h
-        due: new Date(Date.UTC(2019, 12, 24)),
+        due: new Date(Date.UTC(2019, 12, 12)),
         priority: "no-priority",
         tarification: 0.0,
         status: "paused",
@@ -18,6 +23,32 @@ var tasks = [
     },
     {
         id: 1,
+        name: "Buy presents",
+        category: 0,
+        description: "Buy christmas presents",
+        timeElapsed: 0,
+        timeEstimated: 1, // h
+        due: new Date(Date.UTC(2019, 12, 24)),
+        priority: "low",
+        tarification: 0.0,
+        status: "paused",
+        finished: undefined,
+    },
+    {
+        id: 2,
+        name: "Implement a time tracker",
+        category: 1,
+        description: "Implement the project for ITU",
+        timeElapsed: 0,
+        timeEstimated: 10, // h
+        due: new Date(Date.UTC(2019, 12, 8)),
+        priority: "medium",
+        tarification: 0.0,
+        status: "paused",
+        finished: undefined,
+    },
+    {
+        id: 3,
         name: "Present the project",
         category: 1,
         description: "Present the project for ITU",
