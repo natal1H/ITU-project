@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="assets/css/profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><!-- Icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script><!-- Icons -->
-    <script src="assets/js/controller.js"></script> 
+    <script src="assets/js/controller-profile.js"></script> 
     <script src="assets/js/model.js"></script><!-- Model data --> 
     <script src="https://unpkg.com/moment"></script><!-- Moment.js library -->
   </head>
@@ -31,14 +31,12 @@
 
 <div class="settings">
   <div class="user">
-    <h2>Jozef </h2>
-    <h4>mak.jozef@gmail.com</h4>
   </div>
 
   <div class="edit">
-    <p><input type="password" placeholder="password" required></p>
-    <p><input type="password" placeholder="new password" required></p>
-    <p><input type="password" placeholder="password" required></p>
+    <p><input type="password" placeholder="Password" required></p>
+    <p><input type="password" placeholder="New password" required></p>
+    <p><input type="password" placeholder="Confirm new password" required></p>
   </div>
 
   <div class="notifications">
@@ -63,5 +61,9 @@
     <div class="footer">
       <p>2019 &copy; <a href="mailto:xholko02@st ud.fit.vutbr.cz">xholko02</a>, <a href="mailto:xchrip01@stud.fit.vutbr.cz">xchrip01<a>, <a href="mailto:xnovak2f@stud.fit.vutbr.cz">xnovak2f</a></p>
     </div>
+
+    <script>
+      displayUserInfo();
+    </script>
   </body>
 </html>
