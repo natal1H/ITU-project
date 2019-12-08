@@ -589,10 +589,10 @@ function displayTasks() {
             dueDate = moment(task.due).format("D.M.YYYY");
         // priority
         var priorityColor;
-        if (task.priority == "no-priority") priorityColor = 'style="background-color:#ebecf0"';
-        else if (task.priority == "low") priorityColor = 'style="background-color:#e6ffe6"';
-        else if (task.priority == "medium") priorityColor = 'style="background-color:#ffcc99"';
-        else if (task.priority == "high") priorityColor = 'style="background-color:#ff9999"';
+        if (task.priority === "no-priority") priorityColor = 'style="background-color:#ebecf0"';
+        else if (task.priority === "low") priorityColor = 'style="background-color:#e6ffe6"';
+        else if (task.priority === "medium") priorityColor = 'style="background-color:#ffcc99"';
+        else if (task.priority === "high") priorityColor = 'style="background-color:#ff9999"';
         // Due color
         var dueColor = "";
         if (isDueToday(task.due) || isPastDue(task.due))
@@ -668,9 +668,9 @@ function displayDialog(taskObj, categoryObj) {
     // Priority display preparation
     var noneChecked = "", lowChecked = "", mediumChecked = "", highChecked = "";
     if (taskObj.priority == "no-priority") noneChecked = "checked";
-    if (taskObj.priority == "low") lowChecked = "checked";
-    if (taskObj.priority == "medium") mediumChecked = "checked";
-    if (taskObj.priority == "high") highChecked = "checked";
+    else if (taskObj.priority == "low") lowChecked = "checked";
+    else if (taskObj.priority == "medium") mediumChecked = "checked";
+    else if (taskObj.priority == "high") highChecked = "checked";
 
     document.getElementById("myModal").getElementsByClassName("modal-body")[0].innerHTML = `
     <form name="dialog-form" onsubmit="dialogSaveSubmit()">
@@ -687,7 +687,7 @@ function displayDialog(taskObj, categoryObj) {
       <input name="dialog-tarification" type="number" title="Task pricing per hour" step="0.01" value="${taskObj.tarification}"><br>
       <p style="margin:3px 0 3px 0">Priority:</p>
       <ul class="radion-buttons">
-        <li><input name="dialog-priority" type="radio" value="no-prioriy" ${noneChecked}> None</li>
+        <li><input name="dialog-priority" type="radio" value="no-priority" ${noneChecked}> None</li>
         <li><input name="dialog-priority" type="radio" value="low" ${lowChecked}> Low</li>
         <li><input name="dialog-priority" type="radio" value="medium" ${mediumChecked}> Medium</li>
         <li><input name="dialog-priority" type="radio" value="high" ${highChecked}> High</li>
