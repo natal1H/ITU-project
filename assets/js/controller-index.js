@@ -8,8 +8,32 @@
  * Redirect to page with tasks
  */
 function redirect() {
-    window.location.replace("tasks.html");
-    return false;
+    var login = document.forms["login-form"]["login-username"].value;
+    var pass = document.forms["login-form"]["login-pass"].value;
+
+    if (verifyLoginCredentials(login, pass)) {
+        window.location.replace("tasks.html");
+        return true;
+    }
+    else {
+        window.history.back();
+        return false;
+    }
+}
+
+/**
+ * Verify entered login credentials
+ * 
+ * @param {*} login Entered username
+ * @param {*} pass Entered password
+ */
+function verifyLoginCredentials(login, pass) {
+    var user = JSON.parse(localStorage.getItem("storeUser"));
+
+    if (user.login == login && user.password == pass) 
+        return true;
+    else
+        return false;
 }
 
 /**
