@@ -23,10 +23,10 @@
             <input type="submit" value="Login">
             <p class="message">Not registered? <a onclick="createAccountClick()">Create an account</a></p>
           </form>
-          <form id="register-form" class="register-form" onsubmit="return redirect()">
-            <input type="text" placeholder="Name" required>
-            <input type="password" placeholder="Password" required>
-            <input type="text" placeholder="Email address" required>
+          <form id="register-form" class="register-form" onsubmit="event.preventDefault(); redirectRegister()">
+            <input type="text" placeholder="Name" name="register-username" required>
+            <input type="password" placeholder="Password" name="register-pass" required>
+            <input type="text" placeholder="Email address" name="register-email" required>
             <input type="submit" value="Create">
             <p class="message">Already registered? <a onclick="signInClick()">Sign In</a></p>  
           </form>

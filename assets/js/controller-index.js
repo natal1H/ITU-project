@@ -22,6 +22,24 @@ function redirect() {
 }
 
 /**
+ * Redirect from register to page with tasks
+ */
+function redirectRegister() {
+    var login = document.forms["register-form"]["register-username"].value;
+    var pass = document.forms["register-form"]["register-pass"].value;
+    var email = document.forms["register-form"]["register-email"].value;
+
+    if (verifyRegister(login, email) == true) {
+        window.location.replace("tasks.html");
+        return true;
+    }
+    else {
+        window.location.replace("index.html");
+        return false;
+    }
+}
+
+/**
  * Verify entered login credentials
  * 
  * @param {*} login Entered username
@@ -34,6 +52,19 @@ function verifyLoginCredentials(login, pass) {
         return true;
     else
         return false;
+}
+
+function verifyRegister(login, email) {
+    var user = JSON.parse(localStorage.getItem("storeUser"));
+
+    if (user.login == login || user.email == email) {
+        console.log("FALSE");
+        return false;
+    }
+    else {        
+        console.log("TRUE");
+        return true;
+    }
 }
 
 /**
