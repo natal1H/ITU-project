@@ -191,6 +191,8 @@ function taskAddNewSubmit() {
     var taskTarification = taskForm["task-tarification"].value;
     var taskDescription = event.target.getElementsByClassName("task-optional")[0].getElementsByClassName("task-description")[0].value;
     var taskPriority = taskForm["task-priority"].value;
+    if (taskPriority == "")
+        taskPriority = "no-priority";
 
     var tasks = JSON.parse(localStorage.getItem('storeTasks'));
 
