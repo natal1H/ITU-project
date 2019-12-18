@@ -47,7 +47,6 @@ p {
   overflow: hidden;
   background-color: #3c8dbc;
   padding: 5px 5px;
-  margin: 0x;
 }
   
 /* Style the header links */
@@ -124,8 +123,6 @@ p {
   padding: 10px;
   color: white;
   font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
   cursor: pointer;
 }
 
@@ -145,5 +142,18 @@ p {
   margin: 0 0 15px;
   padding: 15px;
   box-sizing: border-box;
+  font-size: 14px;
+}
+
+.notifications input{
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background:lightgray;
+  width: auto;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: initial;
   font-size: 14px;
 }
