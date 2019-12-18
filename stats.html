@@ -57,7 +57,7 @@
         <h3>Remaining tasks</h3>
         <p class="totalTasks"></p>
 	    <p class="totalTasksPriority"></p>
-        <p>Number of remaining tasks past due: <span style="font-weight:bold;color:green;">0</span></p>
+        <p>Number of remaining tasks past due: <span class="NOfLate"></span></p>
       </div>
 
       <!-- Content for "Graphs" -->
@@ -86,5 +86,6 @@
 	<script>getPriority("Tasks", "Remaining");</script>
     <script>createPieChart();</script>
 	<script>tarifTotal();</script>
+    <script>getNOfLateTasks();</script>
   </body>
 </html>

@@ -4,6 +4,22 @@
  */
 
 // Stats page functions
+function getNOfLateTasks() {
+    var tasks = JSON.parse(localStorage.getItem("storeTasks"));
+    var x = 0;
+      for (i = 0; i < tasks.length; i++){
+          if (tasks[i].due < moment().format("YYYY-MM-DD")){
+              x++;
+          }
+      }
+      if (x > 0) {
+          document.getElementsByClassName("NOfLate")[0].innerHTML =  `<span style="font-weight:bold;color: red">${x}</span>`
+      }
+      else {
+          document.getElementsByClassName("NOfLate")[0].innerHTML = `<span style="font-weight:bold;color: green">0</span>`
+      }
+}
+
 function getByPriority(which){
     var tasks = JSON.parse(localStorage.getItem("store"+which));
     var priorities = JSON.parse(localStorage.getItem("storePriorities"));
@@ -76,21 +92,29 @@ function getTarifByGroup(){
 function tarifTotal() {
     var tasksT = JSON.parse(localStorage.getItem("storeTasks"));
     var tasksD = JSON.parse(localStorage.getItem("storeDone"));
+    var hoursWorked = 0.0;
     var Total = 0.0;
     for (i = 0; i < tasksT.length; i++){
+        if (tasksT[i].tarification > 0.009){
         Total += (tasksT[i].timeElapsed / (60*60)) * tasksT[i].tarification;
+        hoursWorked += (tasksT[i].timeElapsed / (60*60));
+        }
     }
     for (j = 0; j < tasksD.length; j++){
+        if (tasksD[j].tarification > 0.009){
         Total += (tasksD[j].timeElapsed / (60*60)) * tasksD[j].tarification;
+        hoursWorked += (tasksD[j].timeElapsed /(60*60));
+        }
     }
   document.getElementsByClassName("tarifTotal")[0].innerHTML =  `
-     <p style="font-weight:bold;">Average: ${Math.round(Total * 100)/100} €/h</p>
+     <p style="font-weight:bold;">Total: ${Math.round(Total * 100)/100} €/h</p>
         <p>
-          Total tarification by groups:
+          Tarification by groups:
           <ul>
             ${getTarifByGroup()}
           </ul>
         </p>
+        <p style="font-weight:bold;">Average €/h of work: ${Math.round((Total/hoursWorked) * 100)/100} €/h</p>
     `
 }
 
