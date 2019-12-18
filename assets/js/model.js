@@ -96,26 +96,26 @@ var done = [
         name: "Stuff already done no1",
         category: 0,
         description: "1st thing I have done",
-        timeElapsed: 240,
+        timeElapsed: 14400,
         timeEstimated: 4, // h
         due: new Date("2019-12-12"),
         priority: "no-priority",
         tarification: 7.0,
         status: "paused",
-        finished: undefined,
+        finished: new Date("2019-12-12"),
     },
     {
         id: 1,
         name: "Stuff already done no2",
         category: 0,
         description: "2nd thing I have done",
-        timeElapsed: 60,
+        timeElapsed: 3600,
         timeEstimated: 1, // h
         due: new Date("2019-12-24"),
         priority: "low",
         tarification: 1.5,
         status: "paused",
-        finished: undefined,
+        finished: new Date("2019-12-24"),
     },
     {
         id: 2,
@@ -128,7 +128,7 @@ var done = [
         priority: "medium",
         tarification: 0.0,
         status: "paused",
-        finished: undefined,
+        finished: new Date("2019-12-08"),
     },
     {
         id: 3,
@@ -141,7 +141,7 @@ var done = [
         priority: "high",
         tarification: 5.0,
         status: "paused",
-        finished: undefined,
+        finished: new Date("2019-12-15"),
     },
 ]
 

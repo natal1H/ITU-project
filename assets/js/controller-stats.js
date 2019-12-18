@@ -118,24 +118,22 @@ function tarifTotal() {
     `
 }
 
-function createPieChart() {
-	    var tasks = JSON.parse(localStorage.getItem("storeTasks"));
+function createPieChart1() {
+	    var tasksD = JSON.parse(localStorage.getItem("storeDone"));
 	    var categories = JSON.parse(localStorage.getItem("storeCategories"));
 	    var groupTimeLabels = [];
-	    var timeData = [];
-	    var tarifData = new Array(categories.length).fill(0);
+	    var timeData = new Array(categories.length).fill(0);
 	    for (i = 0; i < categories.length; i++){
 		groupTimeLabels.push(categories[i].name);
 	    }
-  for (j = 0; j < tasks.length; j++){
-
-	  if((!isNaN(parseFloat(tasks[j].tarification))) &&
-	  (document.getElementsByClassName("from")[0].value <= tasks[j].due ||
+  for (j = 0; j < tasksD.length; j++){
+	  if((tasksD[j].finished != undefined) &&
+	  (document.getElementsByClassName("from")[0].value <= tasksD[j].finished ||
 	  document.getElementsByClassName("from")[0].value == 0) &&
-	  (document.getElementsByClassName("to")[0].value >= tasks[j].due ||
+	  (document.getElementsByClassName("to")[0].value >= tasksD[j].finished ||
 	  document.getElementsByClassName("to")[0].value == 0)
 	  ){
-        tarifData[tasks[j].category] = +(tarifData[tasks[j].category] || 0) + +(tasks[j].tarification);
+        timeData[tasksD[j].category] = +(timeData[tasksD[j].category] || 0) + +(tasksD[j].timeElapsed / 3600);
 	  }
   }
 
@@ -149,10 +147,17 @@ function createPieChart() {
             			label: 'My First dataset',
             			backgroundColor: ['rgb(200, 100, 150)','rgb(150, 200, 100)' ,'rgb(100, 150, 200)','rgb(100, 200, 150)','rgb(150, 100, 200)','rgb(200, 150, 100)'],
             			borderColor: 'white',
-            			data: tarifData
+            			data: timeData
         		}]
     		},
-    		options: {responsive: true, maintainAspectRatio: false}
+    		options: {
+	    	    responsive: true,
+                maintainAspectRatio: false,
+	    	    title: {
+                    display: true,
+                    text: 'Finished work hours',
+                    fontSize: 36,
+        }}
 	});
 }
 
