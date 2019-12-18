@@ -117,6 +117,7 @@ function checkIconClicked() {
 
     // Change task attributes
     task.status = "done";
+    task.category = -1;
     task.finished = moment().toDate().getTime();
 
     // Add to done

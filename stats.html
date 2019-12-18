@@ -45,7 +45,7 @@
     <div class="content-wrapper">
         <div class="from-to-date">
             <form>
-              From: <input type="date" class="from" onchange="createPieChart()"> To: <input type="date" class="to" onchange="createPieChart()">
+              From: <input type="date" class="from" onchange="createPieChart1();createPieChart2();"> To: <input type="date" class="to" onchange="createPieChart1();createPieChart2();">
             </form>
         </div>
 
@@ -63,8 +63,11 @@
       <!-- Content for "Graphs" -->
       <div class="graphs-content" style="display:none">
         <h2>Graphs</h2>
-        <div style="height: 500px; width:500px">
-          <canvas id="myChart"></canvas>
+        <div style="height: 500px; width:500px; display: inline-block; position: absolute; left: 170px;">
+          <canvas id="myChart1"></canvas>
+        </div>
+        <div style="height: 500px; width:500px; display: inline-block; position: absolute; left: 620px;">
+          <canvas id="myChart2"></canvas>
         </div>
       </div>
 
@@ -85,6 +88,7 @@
 	<script>getTotal("Tasks", "Remaining");</script>
 	<script>getPriority("Tasks", "Remaining");</script>
     <script>createPieChart1();</script>
+    <script>createPieChart2();</script>
 	<script>tarifTotal();</script>
     <script>getNOfLateTasks();</script>
   </body>

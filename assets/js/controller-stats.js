@@ -79,9 +79,12 @@ function getTarifByGroup(){
     var ret = "";
     for (i = 0; i < tasksT.length; i++){
         dict[tasksT[i].category] = +(dict[tasksT[i].category] || 0) + +(tasksT[i].tarification*tasksT[i].timeElapsed / (60*60));
+        //document.write("_____________________________________________________________"+tasksT[i].name + " - " + tasksT[i].id + " - " + tasksT[i].timeEstimated + tasksT[i].category + " - " + tasksT[i].timeElapsed +" - " + tasksT[i].due + " - " + tasksT[i].tarification + " - " + tasksT[i].status + " - " + tasksT[i].finished + " - " + "<br>");
     }
     for (j = 0; j < tasksD.length; j++){
         dict[tasksD[j].category] = +(dict[tasksD[j].category] || 0) + +(tasksD[j].tarification*tasksD[j].timeElapsed / (60*60));
+        //document.write("_____________________________________________________________"+tasksD[j].name + " - " + tasksD[j].id + " - " + tasksD[j].timeEstimated + tasksD[j].category + " - " + tasksD[j].timeElapsed +" - " + tasksD[j].due + " - " + tasksD[j].tarification + " - " + tasksD[j].status + " - " + tasksD[j].finished + " - " + "<br>");
+
     }
     for (var key in dict){
         ret += `<li>${categories[key].name}: <span style="font-weight:bold">${Math.round(dict[key] * 100)/100} €</span></li>`;
@@ -138,13 +141,13 @@ function createPieChart1() {
   }
 
 
-	    var ctx = document.getElementById('myChart').getContext('2d');
+	    var ctx = document.getElementById('myChart1').getContext('2d');
 	    var chart = new Chart(ctx, {
 	    	type: 'pie',
     		data: {
         		labels: groupTimeLabels,
         		datasets: [{
-            			label: 'My First dataset',
+            			label: 'FWH',
             			backgroundColor: ['rgb(200, 100, 150)','rgb(150, 200, 100)' ,'rgb(100, 150, 200)','rgb(100, 200, 150)','rgb(150, 100, 200)','rgb(200, 150, 100)'],
             			borderColor: 'white',
             			data: timeData
@@ -156,6 +159,49 @@ function createPieChart1() {
 	    	    title: {
                     display: true,
                     text: 'Finished work hours',
+                    fontSize: 36,
+        }}
+	});
+}
+function createPieChart2() {
+	    var tasksT = JSON.parse(localStorage.getItem("storeTasks"));
+	    var categories = JSON.parse(localStorage.getItem("storeCategories"));
+	    var groupTimeLabels = [];
+	    var timeData = new Array(categories.length).fill(0);
+	    for (i = 0; i < categories.length; i++){
+		groupTimeLabels.push(categories[i].name);
+	    }
+  for (j = 0; j < tasksT.length; j++){
+	  if((tasksT[j].timeEstimated != undefined) &&
+	  (document.getElementsByClassName("from")[0].value <= tasksT[j].due ||
+	  document.getElementsByClassName("from")[0].value == 0) &&
+	  (document.getElementsByClassName("to")[0].value >= tasksT[j].due ||
+	  document.getElementsByClassName("to")[0].value == 0) &&
+        ((tasksT[j].timeEstimated * 3600) > +(tasksT[j].timeElapsed))
+      ){
+        timeData[tasksT[j].category] = +(timeData[tasksT[j].category] || 0) + +(tasksT[j].timeEstimated) - +(tasks[j].timeElapsed / 3600).toFixed(2);
+	  }
+  }
+
+
+	    var ctx = document.getElementById('myChart2').getContext('2d');
+	    var chart = new Chart(ctx, {
+	    	type: 'pie',
+    		data: {
+        		labels: groupTimeLabels,
+        		datasets: [{
+            			label: 'RH',
+            			backgroundColor: ['rgb(200, 100, 150)','rgb(150, 200, 100)' ,'rgb(100, 150, 200)','rgb(100, 200, 150)','rgb(150, 100, 200)','rgb(200, 150, 100)'],
+            			borderColor: 'white',
+            			data: timeData
+        		}]
+    		},
+    		options: {
+	    	    responsive: true,
+                maintainAspectRatio: false,
+	    	    title: {
+                    display: true,
+                    text: 'Remaining hours',
                     fontSize: 36,
         }}
 	});

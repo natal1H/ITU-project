@@ -11,7 +11,7 @@ var priorities = [{0: "no-priority", 1: "low", 2: "medium", 3: "high"}]
 
 var tasks = [
     {
-        id: 4,
+        id: 0,
         name: "Buy train ticket",
         category: 0,
         description: "Buy train ticket to go home",
@@ -24,7 +24,7 @@ var tasks = [
         finished: undefined,
     },
     {
-        id: 5,
+        id: 1,
         name: "Buy presents",
         category: 0,
         description: "Buy christmas presents",
@@ -37,7 +37,7 @@ var tasks = [
         finished: undefined,
     },
     {
-        id: 6,
+        id: 2,
         name: "Help with flyers",
         category: 0,
         description: "Help with handing out flyers",
@@ -50,7 +50,7 @@ var tasks = [
         finished: undefined,
     },
     {
-        id: 7,
+        id: 3,
         name: "Implement a time tracker",
         category: 1,
         description: "Implement the project for ITU",
@@ -63,7 +63,7 @@ var tasks = [
         finished: undefined,
     },
     {
-        id: 8,
+        id: 4,
         name: "Project Practice",
         category: 1,
         description: "Finish project for project practice",
@@ -76,7 +76,7 @@ var tasks = [
         finished: undefined,
     },
     {
-        id: 9,
+        id: 5,
         name: "Part time job",
         category: 2,
         description: "Finish 20 hours of work this week",
@@ -101,7 +101,7 @@ var done = [
         due: new Date("2019-12-12"),
         priority: "no-priority",
         tarification: 7.0,
-        status: "paused",
+        status: "done",
         finished: new Date("2019-12-12"),
     },
     {
@@ -114,7 +114,7 @@ var done = [
         due: new Date("2019-12-24"),
         priority: "low",
         tarification: 1.5,
-        status: "paused",
+        status: "done",
         finished: new Date("2019-12-24"),
     },
     {
@@ -127,7 +127,7 @@ var done = [
         due: new Date("2019-12-08"),
         priority: "medium",
         tarification: 0.0,
-        status: "paused",
+        status: "done",
         finished: new Date("2019-12-08"),
     },
     {
@@ -140,7 +140,7 @@ var done = [
         due: new Date("2019-12-15"),
         priority: "high",
         tarification: 5.0,
-        status: "paused",
+        status: "done",
         finished: new Date("2019-12-15"),
     },
 ]
